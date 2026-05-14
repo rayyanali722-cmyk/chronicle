@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-05-14T18:56:16.924Z",
+    "lastUpdated": "2026-05-14T18:56:18.694Z",
     "version": "2.0"
   },
   "focus": {
@@ -132,14 +132,14 @@
       "title": "Apply to 5 engineering roles",
       "project": "job-search",
       "phase": "js-p2",
-      "status": "doing",
+      "status": "done",
       "priority": "high",
       "deadline": "2026-05-24",
       "blocked": true,
       "notes": "Blocked on resume update",
       "files": [],
       "createdAt": "2026-05-14T00:00:00Z",
-      "completedAt": null
+      "completedAt": "2026-05-14T18:56:17.320Z"
     },
     {
       "id": "js-t4",
@@ -160,14 +160,14 @@
       "title": "Complete STAR method practice (3 stories)",
       "project": "job-search",
       "phase": "js-p3",
-      "status": "todo",
+      "status": "done",
       "priority": "medium",
       "deadline": "2026-06-01",
       "blocked": false,
       "notes": "",
       "files": [],
       "createdAt": "2026-05-14T00:00:00Z",
-      "completedAt": null
+      "completedAt": "2026-05-14T18:56:18.692Z"
     },
     {
       "id": "cswp-t1",
