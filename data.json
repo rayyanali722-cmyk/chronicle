@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-05-14T18:56:13.678Z",
+    "lastUpdated": "2026-05-14T18:56:15.636Z",
     "version": "2.0"
   },
   "focus": {
@@ -104,28 +104,28 @@
       "title": "Update resume with capstone project",
       "project": "job-search",
       "phase": "js-p1",
-      "status": "doing",
+      "status": "done",
       "priority": "high",
       "deadline": "2026-05-18",
       "blocked": false,
       "notes": "",
       "files": [],
       "createdAt": "2026-05-14T00:00:00Z",
-      "completedAt": null
+      "completedAt": "2026-05-14T18:56:14.157Z"
     },
     {
       "id": "js-t2",
       "title": "Refresh LinkedIn headline and about section",
       "project": "job-search",
       "phase": "js-p1",
-      "status": "doing",
+      "status": "done",
       "priority": "medium",
       "deadline": "2026-05-21",
       "blocked": false,
       "notes": "",
       "files": [],
       "createdAt": "2026-05-14T00:00:00Z",
-      "completedAt": null
+      "completedAt": "2026-05-14T18:56:15.634Z"
     },
     {
       "id": "js-t3",
