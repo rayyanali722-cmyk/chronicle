@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-05-14T18:35:34.817Z",
+    "lastUpdated": "2026-05-14T18:35:42.387Z",
     "version": "2.0"
   },
   "focus": {
@@ -146,14 +146,14 @@
       "title": "Follow up on pending applications",
       "project": "job-search",
       "phase": "js-p2",
-      "status": "todo",
+      "status": "done",
       "priority": "medium",
       "deadline": "2026-05-28",
       "blocked": false,
       "notes": "",
       "files": [],
       "createdAt": "2026-05-14T00:00:00Z",
-      "completedAt": null
+      "completedAt": "2026-05-14T18:35:42.386Z"
     },
     {
       "id": "js-t5",
