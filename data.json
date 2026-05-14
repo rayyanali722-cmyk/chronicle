@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-05-14T18:39:34.216Z",
+    "lastUpdated": "2026-05-14T18:39:35.550Z",
     "version": "2.0"
   },
   "focus": {
@@ -216,14 +216,14 @@
       "title": "Finalize prototype v1 demo",
       "project": "capstone",
       "phase": "cap-p1",
-      "status": "doing",
+      "status": "done",
       "priority": "high",
       "deadline": "2026-05-20",
       "blocked": false,
       "notes": "",
       "files": [],
       "createdAt": "2026-05-01T00:00:00Z",
-      "completedAt": null
+      "completedAt": "2026-05-14T18:39:35.549Z"
     },
     {
       "id": "cap-t2",
