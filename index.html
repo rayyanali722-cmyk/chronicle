@@ -175,11 +175,17 @@ body.sb-open #sidebar{transform:translateX(0)}
 .phase-del-btn{opacity:0;font-size:11px;color:var(--text-muted);padding:2px 5px;border-radius:3px;transition:all .15s}
 .phase-block-header:hover .phase-del-btn{opacity:1}
 .phase-del-btn:hover{background:var(--accent-dim);color:var(--accent)}
-.vel-section{margin:10px 0 12px}
-.vel-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;color:var(--text-muted);text-transform:uppercase;margin-bottom:5px}
-.vel-bars{display:flex;align-items:flex-end;gap:3px;height:28px}
+.vel-section{margin:0}
+.vel-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;color:var(--text-muted);text-transform:uppercase;margin-bottom:8px}
+.vel-bars{display:flex;align-items:flex-end;gap:4px;height:60px}
 .vel-bar{flex:1;background:var(--surface3);border-radius:2px 2px 0 0;min-height:3px;transition:background .15s}
 .vel-bar:hover{background:var(--accent)}
+.vel-day-labels{display:flex;gap:4px;margin-top:4px}
+.vel-day-label{flex:1;font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--text-muted);text-align:center}
+.proj-bottom-row{display:flex;gap:16px;margin-top:24px;align-items:stretch}
+.proj-bottom-row .jarvis-chat-section{flex:3;margin-top:0}
+.proj-velocity-panel{flex:2;padding:16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);display:flex;flex-direction:column}
+@media(max-width:700px){.proj-bottom-row{flex-direction:column}}
 .proj-card-actions{display:flex;gap:6px;margin-top:auto;padding-top:12px}
 .proj-ask-btn{flex:1;padding:7px;border:1px solid var(--border);border-radius:var(--radius);font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;color:var(--blue);text-transform:uppercase;border-color:var(--blue-dim);background:var(--blue-dim);transition:all .15s}
 .proj-ask-btn:hover{border-color:var(--blue);background:rgba(52,152,219,.15)}
@@ -316,9 +322,9 @@ body.sb-open #sidebar{transform:translateX(0)}
 @keyframes loadpulse{from{width:0}to{width:100%}}
 
 /* ── JARVIS CHAT ── */
-.jarvis-chat-section{margin-top:24px;padding:16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)}
+.jarvis-chat-section{padding:16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);display:flex;flex-direction:column}
 .jarvis-chat-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.5px;color:var(--text-muted);text-transform:uppercase;margin-bottom:10px}
-.jarvis-chat-section textarea{resize:vertical;min-height:70px;background:var(--surface2)}
+.jarvis-chat-section textarea{resize:none;background:var(--surface2);flex:1}
 .jarvis-send-btn{padding:8px 16px;background:var(--blue-dim);border:1px solid var(--blue-dim);color:var(--blue);border-radius:var(--radius);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;transition:all .15s}
 .jarvis-send-btn:hover{background:rgba(52,152,219,.2);border-color:var(--blue)}
 
@@ -688,8 +694,7 @@ function renderProject(pid,container){
     <div class="proj-detail-header">
       <div class="pdh-top"><span class="pdh-name">${escHtml(p.name)}</span><span class="status-pill ${p.status}">${p.status}</span></div>
       <div class="pdh-meta"><span>${pct}% complete</span><span>·</span><span>${done}/${tasks.length} tasks done</span>${p.deadline?`<span>·</span><span>Due ${formatDate(p.deadline)}</span>`:''}</div>
-    </div>
-    ${velocityChart(pid)}`;
+    </div>`;
   (p.phases||[]).forEach(ph=>{
     const pt=ph.taskIds.map(id=>getTaskById(id)).filter(Boolean);
     const d=pt.filter(t=>t.status==='done').length;
@@ -709,12 +714,18 @@ function renderProject(pid,container){
     </div>`;
   });
   html+=`<button onclick="addPhase('${pid}')" style="margin-top:4px;padding:8px 14px;border:1px dashed var(--border);border-radius:var(--radius);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;color:var(--text-muted);text-transform:uppercase;width:100%;transition:all .15s" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-muted)'">+ ADD PHASE</button>
-  <div class="jarvis-chat-section">
-    <div class="jarvis-chat-label">⚡ Ask Jarvis About This Project</div>
-    <textarea id="jarvis-input-${pid}" placeholder="e.g. What should I focus on next? / Add a task to phase 2..." rows="3"></textarea>
-    <div style="display:flex;align-items:center;gap:8px;margin-top:8px">
-      <button class="jarvis-send-btn" onclick="sendToJarvis('${pid}')">COPY + OPEN CLAUDE.AI</button>
-      <span style="font-size:11px;color:var(--text-muted);font-family:'JetBrains Mono',monospace">Copies project context + your message → paste in Claude.ai</span>
+  <div class="proj-bottom-row">
+    <div class="jarvis-chat-section">
+      <div class="jarvis-chat-label">⚡ Ask Jarvis About This Project</div>
+      <textarea id="jarvis-input-${pid}" placeholder="e.g. What should I focus on next? / Add a task to phase 2..." rows="4" style="flex:1;min-height:90px"></textarea>
+      <div style="display:flex;align-items:center;gap:8px;margin-top:8px">
+        <button class="jarvis-send-btn" onclick="sendToJarvis('${pid}')">COPY + OPEN CLAUDE.AI</button>
+      </div>
+      <div style="font-size:11px;color:var(--text-muted);margin-top:6px;font-family:'JetBrains Mono',monospace">Copies project context + your message → paste in Claude.ai</div>
+    </div>
+    <div class="proj-velocity-panel">
+      <div class="vel-label">7-DAY VELOCITY</div>
+      ${velocityChart(pid, true)}
     </div>
   </div>`;
   container.innerHTML=html;
@@ -1119,13 +1130,15 @@ function deletePhase(pid,phId){
 }
 
 // ── VELOCITY CHART ──
-function velocityChart(pid){
+function velocityChart(pid, bare=false){
   const days=[]; for(let i=6;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);days.push(d.toISOString().split('T')[0]);}
   const tasks=getProjectTasks(pid).filter(t=>t.completedAt);
   const counts=days.map(d=>tasks.filter(t=>t.completedAt&&t.completedAt.startsWith(d)).length);
   const max=Math.max(...counts,1);
-  const bars=counts.map((c,i)=>`<div class="vel-bar" style="height:${Math.max(Math.round(c/max*100),10)}%;background:${c>0?'var(--accent)':'var(--surface3)'};opacity:${c>0?0.7+c/max*0.3:1}" title="${days[i]}: ${c} task${c!==1?'s':''} completed"></div>`).join('');
   const total=counts.reduce((a,b)=>a+b,0);
+  const bars=counts.map((c,i)=>`<div class="vel-bar" style="height:${Math.max(Math.round(c/max*100),10)}%;background:${c>0?'var(--accent)':'var(--surface3)'};opacity:${c>0?0.7+c/max*0.3:1}" title="${days[i]}: ${c} task${c!==1?'s':''} completed"></div>`).join('');
+  const dayLabels=days.map(d=>`<div class="vel-day-label">${new Date(d+'T12:00:00').toLocaleDateString('en',{weekday:'short'}).toUpperCase().slice(0,1)}</div>`).join('');
+  if(bare) return `<div class="vel-bars" style="flex:1">${bars}</div><div class="vel-day-labels">${dayLabels}</div><div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-muted);margin-top:10px">${total} task${total!==1?'s':''} completed this week</div>`;
   return `<div class="vel-section"><div class="vel-label">7-DAY VELOCITY · ${total} DONE</div><div class="vel-bars">${bars}</div></div>`;
 }
 
