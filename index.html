@@ -166,13 +166,27 @@ body.sb-open #sidebar{transform:translateX(0)}
 .task-dl.urgent{background:var(--accent-dim);color:var(--accent)}
 .task-dl.overdue{background:rgba(180,0,0,.15);color:#ff6b6b}
 .task-blocked-tag{font-family:'JetBrains Mono',monospace;font-size:9px;padding:2px 5px;border-radius:3px;background:var(--accent-dim);color:var(--accent);letter-spacing:.5px}
-.task-priority{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-muted);letter-spacing:.5px}
+.task-priority{font-family:'JetBrains Mono',monospace;font-size:9px;padding:2px 5px;border-radius:3px;letter-spacing:.5px;text-transform:uppercase}
+.prio-high{background:rgba(224,48,48,.15);color:var(--accent)}
+.prio-medium{background:var(--yellow-dim);color:var(--yellow)}
+.prio-low{background:var(--blue-dim);color:var(--blue)}
 .phase-add-task{display:flex;align-items:center;gap:6px;padding:6px 8px;margin:4px 0 2px;border-radius:4px;font-size:12px;color:var(--text-muted);transition:all .15s;cursor:pointer}
 .phase-add-task:hover{background:var(--surface2);color:var(--text)}
+.phase-del-btn{opacity:0;font-size:11px;color:var(--text-muted);padding:2px 5px;border-radius:3px;transition:all .15s}
+.phase-block-header:hover .phase-del-btn{opacity:1}
+.phase-del-btn:hover{background:var(--accent-dim);color:var(--accent)}
+.vel-section{margin:10px 0 12px}
+.vel-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;color:var(--text-muted);text-transform:uppercase;margin-bottom:5px}
+.vel-bars{display:flex;align-items:flex-end;gap:3px;height:28px}
+.vel-bar{flex:1;background:var(--surface3);border-radius:2px 2px 0 0;min-height:3px;transition:background .15s}
+.vel-bar:hover{background:var(--accent)}
+.proj-card-actions{display:flex;gap:6px;margin-top:12px}
+.proj-ask-btn{flex:1;padding:7px;border:1px solid var(--border);border-radius:var(--radius);font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;color:var(--blue);text-transform:uppercase;border-color:var(--blue-dim);background:var(--blue-dim);transition:all .15s}
+.proj-ask-btn:hover{border-color:var(--blue);background:rgba(52,152,219,.15)}
 
 /* ── WEEK VIEW ── */
 .week-nav{display:flex;align-items:center;gap:12px;margin-bottom:16px}
-.week-nav-btn{width:32px;height:32px;border:1px solid var(--border);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;color:var(--text-dim);transition:all .15s;font-size:16px}
+.week-nav-btn{min-width:32px;height:32px;padding:0 10px;border:1px solid var(--border);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;color:var(--text-dim);transition:all .15s;font-size:13px;white-space:nowrap}
 .week-nav-btn:hover{border-color:var(--accent);color:var(--accent)}
 .week-label{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;flex:1}
 .week-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
@@ -346,6 +360,7 @@ body.sb-open #sidebar{transform:translateX(0)}
   </div>
   <div class="sb-foot">
     <button class="btn-add-task" onclick="openAddTaskModal(null,null)">+ ADD TASK</button>
+    <button class="btn-add-task" onclick="openAddProjectModal()" style="background:var(--surface3);border:1px solid var(--border);color:var(--text-dim)">+ NEW PROJECT</button>
     <button class="btn-jarvis" onclick="copyJarvisContext()">⚡ COPY JARVIS CONTEXT</button>
     <button class="btn-settings" onclick="openSettingsModal()">⚙ SETTINGS</button>
   </div>
@@ -443,6 +458,29 @@ body.sb-open #sidebar{transform:translateX(0)}
     </div>
     <div class="modal-body" id="focus-modal-body"></div>
     <div class="modal-foot"><button class="btn-secondary" onclick="closeFocusModal()">CLOSE</button></div>
+  </div>
+</div>
+
+<!-- Add Project Modal -->
+<div id="add-project-modal" class="modal" onclick="modalOutsideClick(event,'add-project-modal')">
+  <div class="modal-backdrop"></div>
+  <div class="modal-box">
+    <div class="modal-head">
+      <span class="modal-title">NEW PROJECT</span>
+      <button class="modal-close" onclick="closeAddProjectModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-row"><label class="form-label">Project Name *</label><input id="ap-name" type="text" placeholder="e.g. Job Search"></div>
+      <div class="form-row-2">
+        <div><label class="form-label">Status</label><select id="ap-status"><option value="active">Active</option><option value="paused">Paused</option></select></div>
+        <div><label class="form-label">Deadline</label><input id="ap-deadline" type="date"></div>
+      </div>
+      <div class="form-row"><label class="form-label">First Phase Name</label><input id="ap-phase" type="text" placeholder="e.g. Phase 1 (optional)"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-secondary" onclick="closeAddProjectModal()">CANCEL</button>
+      <button class="btn-primary" onclick="submitAddProject()">CREATE PROJECT</button>
+    </div>
   </div>
 </div>
 
@@ -615,10 +653,14 @@ function renderGrid(){
     html+=`<div class="proj-card" onclick="openProject('${p.id}')">
       <div class="proj-card-top"><span class="proj-card-name">${escHtml(p.name)}</span><span class="status-pill ${p.status}">${p.status}</span></div>
       <div class="proj-progress"><div class="prog-label"><span>PROGRESS</span><span>${pct}%</span></div><div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div></div>
+      ${velocityChart(p.id)}
       <div class="proj-deadline">${escHtml(dl)}</div>
       <div class="proj-phases">${phases}</div>
       ${next?`<div class="proj-next-action"><div class="pna-label">Next Action</div><div class="pna-text">${escHtml(next.title)}</div></div>`:''}
-      <button class="proj-open-btn" onclick="event.stopPropagation();openProject('${p.id}')">OPEN FULL PROJECT →</button>
+      <div class="proj-card-actions">
+        <button class="proj-ask-btn" onclick="event.stopPropagation();copyProjectContext('${p.id}')">⚡ ASK JARVIS</button>
+        <button class="proj-open-btn" style="flex:2;margin-top:0" onclick="event.stopPropagation();openProject('${p.id}')">OPEN →</button>
+      </div>
     </div>`;
   });
   html+=`</div>`;
@@ -631,7 +673,12 @@ function renderProject(pid,container){
   const pct=calcProgress(pid);
   const tasks=getProjectTasks(pid);
   const done=tasks.filter(t=>t.status==='done').length;
-  let html=`<button class="back-btn" onclick="backToGrid()">← ALL PROJECTS</button>
+  let html=`<div style="display:flex;align-items:center;gap:10px;margin-bottom:20px">
+      <button class="back-btn" style="margin-bottom:0" onclick="backToGrid()">← ALL PROJECTS</button>
+      <div style="flex:1"></div>
+      <button onclick="copyProjectContext('${pid}')" style="padding:6px 12px;border:1px solid var(--blue-dim);background:var(--blue-dim);color:var(--blue);border-radius:var(--radius);font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;transition:all .15s" onmouseover="this.style.borderColor='var(--blue)'" onmouseout="this.style.borderColor='var(--blue-dim)'">⚡ ASK JARVIS</button>
+      <button onclick="deleteProject('${pid}')" style="padding:6px 12px;border:1px solid var(--border);color:var(--text-muted);border-radius:var(--radius);font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;transition:all .15s" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-muted)'">🗑 DELETE PROJECT</button>
+    </div>
     <div class="proj-detail-header">
       <div class="pdh-top"><span class="pdh-name">${escHtml(p.name)}</span><span class="status-pill ${p.status}">${p.status}</span></div>
       <div class="pdh-meta"><span>${pct}% complete</span><span>·</span><span>${done}/${tasks.length} tasks done</span>${p.deadline?`<span>·</span><span>Due ${formatDate(p.deadline)}</span>`:''}</div>
@@ -642,7 +689,11 @@ function renderProject(pid,container){
     html+=`<div class="phase-block" id="ph-${ph.id}">
       <div class="phase-block-header" onclick="togglePhase('${ph.id}')">
         <span class="phase-block-title">${escHtml(ph.name)}</span>
-        <div class="phase-block-meta"><span class="phase-progress">${d}/${pt.length}</span><span class="phase-chevron">▾</span></div>
+        <div class="phase-block-meta">
+          <span class="phase-progress">${d}/${pt.length}</span>
+          <button class="phase-del-btn" onclick="event.stopPropagation();deletePhase('${pid}','${ph.id}')" title="Delete phase">✕</button>
+          <span class="phase-chevron">▾</span>
+        </div>
       </div>
       <div class="phase-tasks">
         ${pt.map(t=>renderTaskRow(t)).join('')}
@@ -650,6 +701,7 @@ function renderProject(pid,container){
       </div>
     </div>`;
   });
+  html+=`<button onclick="addPhase('${pid}')" style="margin-top:4px;padding:8px 14px;border:1px dashed var(--border);border-radius:var(--radius);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;color:var(--text-muted);text-transform:uppercase;width:100%;transition:all .15s" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-muted)'">+ ADD PHASE</button>`;
   container.innerHTML=html;
 }
 
@@ -663,7 +715,7 @@ function renderTaskRow(t){
       <div class="task-meta-row">
         ${t.deadline?`<span class="task-dl ${dlClass}">${formatDate(t.deadline)}</span>`:''}
         ${t.blocked?`<span class="task-blocked-tag">BLOCKED</span>`:''}
-        <span class="task-priority">${t.priority||''}</span>
+        ${t.priority?`<span class="task-priority prio-${t.priority}">${t.priority}</span>`:''}
       </div>
     </div>
   </div>`;
@@ -733,7 +785,8 @@ function renderTable(){
   const arr=s.dir==='asc'?'↑':'↓';
   const th=(col,lbl)=>`<th onclick="sortTable('${col}')" class="${s.col===col?'sorted':''}">${lbl}${s.col===col?` ${arr}`:''}</th>`;
   const projs=APP.data.projects||[];
-  let html=`<div class="table-wrap"><table class="task-table"><thead>
+  let html=`<div style="display:flex;justify-content:flex-end;margin-bottom:12px"><button onclick="openAddTaskModal(null,null)" style="padding:7px 16px;background:var(--accent);color:#fff;border-radius:var(--radius);font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:1px;transition:background .15s" onmouseover="this.style.background='#ff4040'" onmouseout="this.style.background='var(--accent)'">+ ADD TASK</button></div>
+  <div class="table-wrap"><table class="task-table"><thead>
     <tr>${th('title','TASK')}${th('project','PROJECT')}${th('status','STATUS')}${th('priority','PRIORITY')}${th('deadline','DEADLINE')}</tr>
     <tr class="table-filter-row">
       <td><input type="text" placeholder="Filter…" value="${escHtml(f.title)}" oninput="APP.tableFilters.title=this.value;renderTable()"></td>
@@ -782,13 +835,13 @@ function checkFocusTask(id){
   const t=getTaskById(id); if(!t) return;
   t.status=t.status==='done'?'todo':'done';
   t.completedAt=t.status==='done'?new Date().toISOString():null;
-  renderFocus(); renderActiveView(); saveData();
+  renderFocus(); renderProjectsNav(); renderActiveView(); saveData();
 }
 function cycleStatus(id){
   const t=getTaskById(id); if(!t) return;
   const c={todo:'doing',doing:'done',done:'todo',blocked:'todo'};
   t.status=c[t.status]||'todo'; t.completedAt=t.status==='done'?new Date().toISOString():null;
-  renderFocus(); renderActiveView(); saveData();
+  renderFocus(); renderProjectsNav(); renderActiveView(); saveData();
 }
 
 // ── TASK DRAWER ──
@@ -892,7 +945,7 @@ function saveDrawer(){
   t.notes=document.getElementById('d-notes')?.value||'';
   const idx=APP.data.tasks.findIndex(x=>x.id===t.id);
   if(idx>-1) APP.data.tasks[idx]={...t};
-  closeDrawer(); renderFocus(); renderActiveView(); saveData();
+  closeDrawer(); renderFocus(); renderProjectsNav(); renderActiveView(); saveData();
 }
 function deleteCurrentTask(){
   if(!APP.drawerTaskId||!confirm('Delete this task?')) return;
@@ -999,6 +1052,83 @@ function copyJarvisContext(){
   if(blocked.length){ ctx+=`\n### Blocked\n`; blocked.forEach(t=>ctx+=`- ${t.title}: ${t.notes||'no details'}\n`); }
   ctx+=`\n---\n[Your question here]`;
   navigator.clipboard.writeText(ctx).then(()=>showToast('Jarvis context copied — paste in Claude.ai ✓','success')).catch(()=>showToast('Copy failed','error'));
+}
+
+// ── ADD PROJECT ──
+function openAddProjectModal(){
+  ['ap-name','ap-phase'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('ap-deadline').value='';
+  document.getElementById('ap-status').value='active';
+  document.getElementById('add-project-modal').classList.add('open');
+  setTimeout(()=>document.getElementById('ap-name').focus(),120);
+}
+function closeAddProjectModal(){ document.getElementById('add-project-modal').classList.remove('open'); }
+function submitAddProject(){
+  const name=document.getElementById('ap-name').value.trim();
+  if(!name){ showToast('Project name required','error'); return; }
+  const id='proj-'+Date.now();
+  const phaseName=document.getElementById('ap-phase').value.trim();
+  const phases=phaseName?[{id:'ph-'+Date.now(),name:phaseName,taskIds:[],order:0}]:[];
+  const proj={id,name,status:document.getElementById('ap-status').value,deadline:document.getElementById('ap-deadline').value||null,phases};
+  APP.data.projects.push(proj);
+  closeAddProjectModal(); renderSidebar(); renderActiveView(); saveData(); showToast('Project created ✓','success');
+}
+
+// ── DELETE PROJECT ──
+function deleteProject(pid){
+  const proj=getProjectById(pid); if(!proj) return;
+  const taskIds=getProjectTasks(pid).map(t=>t.id);
+  if(!confirm(`Delete "${proj.name}" and all ${taskIds.length} tasks? This cannot be undone.`)) return;
+  if(APP.data.focus?.taskIds) APP.data.focus.taskIds=APP.data.focus.taskIds.filter(id=>!taskIds.includes(id));
+  APP.data.tasks=APP.data.tasks.filter(t=>t.project!==pid);
+  APP.data.projects=APP.data.projects.filter(p=>p.id!==pid);
+  APP.project=null; renderSidebar(); renderGrid(); saveData(); showToast('Project deleted','success');
+}
+
+// ── ADD / DELETE PHASE ──
+function addPhase(pid){
+  const name=prompt('Phase name:'); if(!name?.trim()) return;
+  const proj=getProjectById(pid); if(!proj) return;
+  proj.phases=proj.phases||[];
+  proj.phases.push({id:'ph-'+Date.now(),name:name.trim(),taskIds:[],order:proj.phases.length});
+  renderActiveView(); saveData(); showToast('Phase added ✓','success');
+}
+function deletePhase(pid,phId){
+  const proj=getProjectById(pid); if(!proj) return;
+  const ph=proj.phases.find(p=>p.id===phId); if(!ph) return;
+  if(ph.taskIds.length>0&&!confirm(`Delete phase "${ph.name}" and its ${ph.taskIds.length} tasks?`)) return;
+  if(APP.data.focus?.taskIds) APP.data.focus.taskIds=APP.data.focus.taskIds.filter(id=>!ph.taskIds.includes(id));
+  APP.data.tasks=APP.data.tasks.filter(t=>!ph.taskIds.includes(t.id));
+  proj.phases=proj.phases.filter(p=>p.id!==phId);
+  renderFocus(); renderActiveView(); saveData(); showToast('Phase deleted','success');
+}
+
+// ── VELOCITY CHART ──
+function velocityChart(pid){
+  const days=[]; for(let i=6;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);days.push(d.toISOString().split('T')[0]);}
+  const tasks=getProjectTasks(pid).filter(t=>t.completedAt);
+  const counts=days.map(d=>tasks.filter(t=>t.completedAt&&t.completedAt.startsWith(d)).length);
+  const max=Math.max(...counts,1);
+  const bars=counts.map((c,i)=>`<div class="vel-bar" style="height:${Math.max(Math.round(c/max*100),10)}%;background:${c>0?'var(--accent)':'var(--surface3)'};opacity:${c>0?0.7+c/max*0.3:1}" title="${days[i]}: ${c} task${c!==1?'s':''} completed"></div>`).join('');
+  const total=counts.reduce((a,b)=>a+b,0);
+  return `<div class="vel-section"><div class="vel-label">7-DAY VELOCITY · ${total} DONE</div><div class="vel-bars">${bars}</div></div>`;
+}
+
+// ── PER-PROJECT JARVIS CONTEXT ──
+function copyProjectContext(pid){
+  const p=getProjectById(pid); if(!p) return;
+  const tasks=getProjectTasks(pid);
+  const done=tasks.filter(t=>t.status==='done').length;
+  const blocked=tasks.filter(t=>t.blocked&&t.status!=='done');
+  let ctx=`## Chronicle — ${p.name}\n**Date:** ${todayISO()} | **Progress:** ${calcProgress(pid)}% (${done}/${tasks.length} tasks)\n${p.deadline?`**Deadline:** ${p.deadline}\n`:''}\n`;
+  (p.phases||[]).forEach(ph=>{
+    const pt=ph.taskIds.map(id=>getTaskById(id)).filter(Boolean);
+    ctx+=`### ${ph.name} (${pt.filter(t=>t.status==='done').length}/${pt.length})\n`;
+    pt.forEach(t=>{ ctx+=`- [${t.status.toUpperCase()}${t.blocked?' BLOCKED':''}] ${t.title}${t.deadline?' (due '+t.deadline+')':''}\n`; });
+  });
+  if(blocked.length){ ctx+=`\n### Blocked\n`; blocked.forEach(t=>ctx+=`- ${t.title}: ${t.notes||'no details'}\n`); }
+  ctx+=`\n---\n[Your question here]`;
+  navigator.clipboard.writeText(ctx).then(()=>showToast(`${p.name} context copied ✓`,'success')).catch(()=>showToast('Copy failed','error'));
 }
 
 // ── UTILS ──
