@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-05-14T18:39:36.524Z",
+    "lastUpdated": "2026-05-14T18:40:28.033Z",
     "version": "2.0"
   },
   "focus": {
@@ -104,21 +104,21 @@
       "title": "Update resume with capstone project",
       "project": "job-search",
       "phase": "js-p1",
-      "status": "done",
+      "status": "todo",
       "priority": "high",
       "deadline": "2026-05-18",
       "blocked": false,
       "notes": "",
       "files": [],
       "createdAt": "2026-05-14T00:00:00Z",
-      "completedAt": "2026-05-14T18:39:36.523Z"
+      "completedAt": null
     },
     {
       "id": "js-t2",
       "title": "Refresh LinkedIn headline and about section",
       "project": "job-search",
       "phase": "js-p1",
-      "status": "todo",
+      "status": "doing",
       "priority": "medium",
       "deadline": "2026-05-21",
       "blocked": false,
@@ -188,14 +188,14 @@
       "title": "Review Assembly & Drawing modules",
       "project": "cswp",
       "phase": "cswp-p1",
-      "status": "done",
+      "status": "todo",
       "priority": "high",
       "deadline": "2026-05-25",
       "blocked": false,
       "notes": "",
       "files": [],
       "createdAt": "2026-05-01T00:00:00Z",
-      "completedAt": "2026-05-14T18:39:34.215Z"
+      "completedAt": null
     },
     {
       "id": "cswp-t3",
@@ -216,14 +216,14 @@
       "title": "Finalize prototype v1 demo",
       "project": "capstone",
       "phase": "cap-p1",
-      "status": "done",
+      "status": "doing",
       "priority": "high",
       "deadline": "2026-05-20",
       "blocked": false,
       "notes": "",
       "files": [],
       "createdAt": "2026-05-01T00:00:00Z",
-      "completedAt": "2026-05-14T18:39:35.549Z"
+      "completedAt": null
     },
     {
       "id": "cap-t2",
@@ -244,14 +244,14 @@
       "title": "Build pitch deck (10 slides)",
       "project": "capstone",
       "phase": "cap-p2",
-      "status": "done",
+      "status": "doing",
       "priority": "high",
       "deadline": "2026-06-05",
       "blocked": false,
       "notes": "",
       "files": [],
       "createdAt": "2026-05-01T00:00:00Z",
-      "completedAt": "2026-05-14T18:35:48.522Z"
+      "completedAt": null
     }
   ],
   "events": []
