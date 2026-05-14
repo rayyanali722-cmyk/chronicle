@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-05-14T18:35:47.839Z",
+    "lastUpdated": "2026-05-14T18:39:34.216Z",
     "version": "2.0"
   },
   "focus": {
@@ -188,14 +188,14 @@
       "title": "Review Assembly & Drawing modules",
       "project": "cswp",
       "phase": "cswp-p1",
-      "status": "todo",
+      "status": "done",
       "priority": "high",
       "deadline": "2026-05-25",
       "blocked": false,
       "notes": "",
       "files": [],
       "createdAt": "2026-05-01T00:00:00Z",
-      "completedAt": null
+      "completedAt": "2026-05-14T18:39:34.215Z"
     },
     {
       "id": "cswp-t3",
@@ -244,14 +244,14 @@
       "title": "Build pitch deck (10 slides)",
       "project": "capstone",
       "phase": "cap-p2",
-      "status": "doing",
+      "status": "done",
       "priority": "high",
       "deadline": "2026-06-05",
       "blocked": false,
       "notes": "",
       "files": [],
       "createdAt": "2026-05-01T00:00:00Z",
-      "completedAt": null
+      "completedAt": "2026-05-14T18:35:48.522Z"
     }
   ],
   "events": []
