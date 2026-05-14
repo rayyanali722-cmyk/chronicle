@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-05-14T18:35:42.387Z",
+    "lastUpdated": "2026-05-14T18:35:47.839Z",
     "version": "2.0"
   },
   "focus": {
@@ -244,7 +244,7 @@
       "title": "Build pitch deck (10 slides)",
       "project": "capstone",
       "phase": "cap-p2",
-      "status": "todo",
+      "status": "doing",
       "priority": "high",
       "deadline": "2026-06-05",
       "blocked": false,
