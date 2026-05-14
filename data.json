@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-05-14T18:40:28.033Z",
+    "lastUpdated": "2026-05-14T18:56:13.678Z",
     "version": "2.0"
   },
   "focus": {
@@ -104,7 +104,7 @@
       "title": "Update resume with capstone project",
       "project": "job-search",
       "phase": "js-p1",
-      "status": "todo",
+      "status": "doing",
       "priority": "high",
       "deadline": "2026-05-18",
       "blocked": false,
