@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-05-14T18:35:33.798Z",
+    "lastUpdated": "2026-05-14T18:35:34.817Z",
     "version": "2.0"
   },
   "focus": {
@@ -146,7 +146,7 @@
       "title": "Follow up on pending applications",
       "project": "job-search",
       "phase": "js-p2",
-      "status": "doing",
+      "status": "todo",
       "priority": "medium",
       "deadline": "2026-05-28",
       "blocked": false,
