@@ -110,7 +110,7 @@ body.sb-open #sidebar{transform:translateX(0)}
 .project-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 @media(max-width:1024px){.project-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:600px){.project-grid{grid-template-columns:1fr}}
-.proj-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px;cursor:pointer;transition:border-color .2s,transform .15s}
+.proj-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px;cursor:pointer;transition:border-color .2s,transform .15s;display:flex;flex-direction:column}
 .proj-card:hover{border-color:var(--accent);transform:translateY(-1px)}
 .proj-card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px}
 .proj-card-name{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:1px;line-height:1.1}
@@ -122,14 +122,14 @@ body.sb-open #sidebar{transform:translateX(0)}
 .prog-label{display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-muted);margin-bottom:5px}
 .prog-bar{height:3px;background:var(--surface3);border-radius:2px;overflow:hidden}
 .prog-fill{height:100%;background:var(--accent);border-radius:2px;transition:width .4s}
-.proj-deadline{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-muted);margin-bottom:14px}
+.proj-deadline{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-dim);margin-bottom:14px}
 .proj-phases{display:flex;flex-direction:column;gap:5px;margin-bottom:14px}
 .phase-row{display:flex;align-items:center;gap:8px}
 .phase-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
-.phase-name{font-size:12px;color:var(--text-dim);flex:1}
-.phase-count{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-muted)}
+.phase-name{font-size:12px;color:#bbb;flex:1}
+.phase-count{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-dim)}
 .proj-next-action{background:var(--surface2);border-radius:4px;padding:8px 10px}
-.pna-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;color:var(--text-muted);text-transform:uppercase;margin-bottom:4px}
+.pna-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;color:var(--text-dim);text-transform:uppercase;margin-bottom:4px}
 .pna-text{font-size:12px;color:var(--text-dim);line-height:1.4}
 .proj-open-btn{width:100%;margin-top:12px;padding:8px;border:1px solid var(--border);border-radius:var(--radius);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;color:var(--text-dim);text-transform:uppercase;transition:all .15s}
 .proj-open-btn:hover{border-color:var(--accent);color:var(--accent)}
@@ -180,7 +180,7 @@ body.sb-open #sidebar{transform:translateX(0)}
 .vel-bars{display:flex;align-items:flex-end;gap:3px;height:28px}
 .vel-bar{flex:1;background:var(--surface3);border-radius:2px 2px 0 0;min-height:3px;transition:background .15s}
 .vel-bar:hover{background:var(--accent)}
-.proj-card-actions{display:flex;gap:6px;margin-top:12px}
+.proj-card-actions{display:flex;gap:6px;margin-top:auto;padding-top:12px}
 .proj-ask-btn{flex:1;padding:7px;border:1px solid var(--border);border-radius:var(--radius);font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;color:var(--blue);text-transform:uppercase;border-color:var(--blue-dim);background:var(--blue-dim);transition:all .15s}
 .proj-ask-btn:hover{border-color:var(--blue);background:rgba(52,152,219,.15)}
 
@@ -314,6 +314,13 @@ body.sb-open #sidebar{transform:translateX(0)}
 .load-bar{width:120px;height:2px;background:var(--surface2);border-radius:1px;overflow:hidden}
 .load-fill{height:100%;background:var(--accent);border-radius:1px;animation:loadpulse 1.2s ease-in-out infinite alternate}
 @keyframes loadpulse{from{width:0}to{width:100%}}
+
+/* ── JARVIS CHAT ── */
+.jarvis-chat-section{margin-top:24px;padding:16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)}
+.jarvis-chat-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.5px;color:var(--text-muted);text-transform:uppercase;margin-bottom:10px}
+.jarvis-chat-section textarea{resize:vertical;min-height:70px;background:var(--surface2)}
+.jarvis-send-btn{padding:8px 16px;background:var(--blue-dim);border:1px solid var(--blue-dim);color:var(--blue);border-radius:var(--radius);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;transition:all .15s}
+.jarvis-send-btn:hover{background:rgba(52,152,219,.2);border-color:var(--blue)}
 
 /* ── MOBILE ── */
 @media(max-width:600px){
@@ -653,7 +660,6 @@ function renderGrid(){
     html+=`<div class="proj-card" onclick="openProject('${p.id}')">
       <div class="proj-card-top"><span class="proj-card-name">${escHtml(p.name)}</span><span class="status-pill ${p.status}">${p.status}</span></div>
       <div class="proj-progress"><div class="prog-label"><span>PROGRESS</span><span>${pct}%</span></div><div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div></div>
-      ${velocityChart(p.id)}
       <div class="proj-deadline">${escHtml(dl)}</div>
       <div class="proj-phases">${phases}</div>
       ${next?`<div class="proj-next-action"><div class="pna-label">Next Action</div><div class="pna-text">${escHtml(next.title)}</div></div>`:''}
@@ -682,7 +688,8 @@ function renderProject(pid,container){
     <div class="proj-detail-header">
       <div class="pdh-top"><span class="pdh-name">${escHtml(p.name)}</span><span class="status-pill ${p.status}">${p.status}</span></div>
       <div class="pdh-meta"><span>${pct}% complete</span><span>·</span><span>${done}/${tasks.length} tasks done</span>${p.deadline?`<span>·</span><span>Due ${formatDate(p.deadline)}</span>`:''}</div>
-    </div>`;
+    </div>
+    ${velocityChart(pid)}`;
   (p.phases||[]).forEach(ph=>{
     const pt=ph.taskIds.map(id=>getTaskById(id)).filter(Boolean);
     const d=pt.filter(t=>t.status==='done').length;
@@ -701,7 +708,15 @@ function renderProject(pid,container){
       </div>
     </div>`;
   });
-  html+=`<button onclick="addPhase('${pid}')" style="margin-top:4px;padding:8px 14px;border:1px dashed var(--border);border-radius:var(--radius);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;color:var(--text-muted);text-transform:uppercase;width:100%;transition:all .15s" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-muted)'">+ ADD PHASE</button>`;
+  html+=`<button onclick="addPhase('${pid}')" style="margin-top:4px;padding:8px 14px;border:1px dashed var(--border);border-radius:var(--radius);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;color:var(--text-muted);text-transform:uppercase;width:100%;transition:all .15s" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-muted)'">+ ADD PHASE</button>
+  <div class="jarvis-chat-section">
+    <div class="jarvis-chat-label">⚡ Ask Jarvis About This Project</div>
+    <textarea id="jarvis-input-${pid}" placeholder="e.g. What should I focus on next? / Add a task to phase 2..." rows="3"></textarea>
+    <div style="display:flex;align-items:center;gap:8px;margin-top:8px">
+      <button class="jarvis-send-btn" onclick="sendToJarvis('${pid}')">COPY + OPEN CLAUDE.AI</button>
+      <span style="font-size:11px;color:var(--text-muted);font-family:'JetBrains Mono',monospace">Copies project context + your message → paste in Claude.ai</span>
+    </div>
+  </div>`;
   container.innerHTML=html;
 }
 
@@ -1129,6 +1144,28 @@ function copyProjectContext(pid){
   if(blocked.length){ ctx+=`\n### Blocked\n`; blocked.forEach(t=>ctx+=`- ${t.title}: ${t.notes||'no details'}\n`); }
   ctx+=`\n---\n[Your question here]`;
   navigator.clipboard.writeText(ctx).then(()=>showToast(`${p.name} context copied ✓`,'success')).catch(()=>showToast('Copy failed','error'));
+}
+
+function sendToJarvis(pid){
+  const input=document.getElementById('jarvis-input-'+pid);
+  const msg=input?.value.trim();
+  if(!msg){ showToast('Type a message first','error'); return; }
+  const p=getProjectById(pid); if(!p) return;
+  const tasks=getProjectTasks(pid);
+  const done=tasks.filter(t=>t.status==='done').length;
+  const blocked=tasks.filter(t=>t.blocked&&t.status!=='done');
+  let ctx=`## Chronicle — ${p.name}\n**Date:** ${todayISO()} | **Progress:** ${calcProgress(pid)}% (${done}/${tasks.length} tasks)\n${p.deadline?`**Deadline:** ${p.deadline}\n`:''}\n`;
+  (p.phases||[]).forEach(ph=>{
+    const pt=ph.taskIds.map(id=>getTaskById(id)).filter(Boolean);
+    ctx+=`### ${ph.name} (${pt.filter(t=>t.status==='done').length}/${pt.length})\n`;
+    pt.forEach(t=>{ ctx+=`- [${t.status.toUpperCase()}${t.blocked?' BLOCKED':''}] ${t.title}${t.deadline?' (due '+t.deadline+')':''}\n`; });
+  });
+  if(blocked.length){ ctx+=`\n### Blocked\n`; blocked.forEach(t=>ctx+=`- ${t.title}: ${t.notes||'no details'}\n`); }
+  ctx+=`\n---\n${msg}`;
+  navigator.clipboard.writeText(ctx).then(()=>{
+    showToast('Copied — paste in Claude.ai ✓','success');
+    window.open('https://claude.ai','_blank');
+  }).catch(()=>showToast('Copy failed','error'));
 }
 
 // ── UTILS ──
