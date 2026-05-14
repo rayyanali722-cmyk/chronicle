@@ -1,0 +1,58 @@
+{
+  "meta": {
+    "lastUpdated": "2026-05-14T17:00:00Z",
+    "version": "2.0"
+  },
+  "focus": {
+    "date": "2026-05-14",
+    "taskIds": ["js-t1", "cap-t1", "cswp-t2"],
+    "note": "Get the resume updated and keep capstone momentum going."
+  },
+  "projects": [
+    {
+      "id": "job-search",
+      "name": "Job Search",
+      "status": "active",
+      "deadline": "2026-08-15",
+      "phases": [
+        { "id": "js-p1", "name": "Resume & Portfolio", "taskIds": ["js-t1","js-t2"], "order": 0 },
+        { "id": "js-p2", "name": "Applications", "taskIds": ["js-t3","js-t4"], "order": 1 },
+        { "id": "js-p3", "name": "Interview Prep", "taskIds": ["js-t5"], "order": 2 }
+      ]
+    },
+    {
+      "id": "cswp",
+      "name": "CSWP Cert Prep",
+      "status": "active",
+      "deadline": "2026-07-01",
+      "phases": [
+        { "id": "cswp-p1", "name": "Study Modules", "taskIds": ["cswp-t1","cswp-t2"], "order": 0 },
+        { "id": "cswp-p2", "name": "Practice Exams", "taskIds": ["cswp-t3"], "order": 1 }
+      ]
+    },
+    {
+      "id": "capstone",
+      "name": "Capstone Startup",
+      "status": "active",
+      "deadline": "2026-06-15",
+      "phases": [
+        { "id": "cap-p1", "name": "Prototype", "taskIds": ["cap-t1","cap-t2"], "order": 0 },
+        { "id": "cap-p2", "name": "Pitch Deck", "taskIds": ["cap-t3"], "order": 1 }
+      ]
+    }
+  ],
+  "tasks": [
+    { "id": "js-t1", "title": "Update resume with capstone project", "project": "job-search", "phase": "js-p1", "status": "todo", "priority": "high", "deadline": "2026-05-18", "blocked": false, "notes": "", "files": [], "createdAt": "2026-05-14T00:00:00Z", "completedAt": null },
+    { "id": "js-t2", "title": "Refresh LinkedIn headline and about section", "project": "job-search", "phase": "js-p1", "status": "todo", "priority": "medium", "deadline": "2026-05-21", "blocked": false, "notes": "", "files": [], "createdAt": "2026-05-14T00:00:00Z", "completedAt": null },
+    { "id": "js-t3", "title": "Apply to 5 engineering roles", "project": "job-search", "phase": "js-p2", "status": "todo", "priority": "high", "deadline": "2026-05-24", "blocked": true, "notes": "Blocked on resume update", "files": [], "createdAt": "2026-05-14T00:00:00Z", "completedAt": null },
+    { "id": "js-t4", "title": "Follow up on pending applications", "project": "job-search", "phase": "js-p2", "status": "todo", "priority": "medium", "deadline": "2026-05-28", "blocked": false, "notes": "", "files": [], "createdAt": "2026-05-14T00:00:00Z", "completedAt": null },
+    { "id": "js-t5", "title": "Complete STAR method practice (3 stories)", "project": "job-search", "phase": "js-p3", "status": "todo", "priority": "medium", "deadline": "2026-06-01", "blocked": false, "notes": "", "files": [], "createdAt": "2026-05-14T00:00:00Z", "completedAt": null },
+    { "id": "cswp-t1", "title": "Review Part Modeling module", "project": "cswp", "phase": "cswp-p1", "status": "done", "priority": "high", "deadline": "2026-05-10", "blocked": false, "notes": "", "files": [], "createdAt": "2026-05-01T00:00:00Z", "completedAt": "2026-05-10T12:00:00Z" },
+    { "id": "cswp-t2", "title": "Review Assembly & Drawing modules", "project": "cswp", "phase": "cswp-p1", "status": "todo", "priority": "high", "deadline": "2026-05-25", "blocked": false, "notes": "", "files": [], "createdAt": "2026-05-01T00:00:00Z", "completedAt": null },
+    { "id": "cswp-t3", "title": "Complete 2 full practice exams", "project": "cswp", "phase": "cswp-p2", "status": "todo", "priority": "high", "deadline": "2026-06-15", "blocked": true, "notes": "Blocked on module review", "files": [], "createdAt": "2026-05-01T00:00:00Z", "completedAt": null },
+    { "id": "cap-t1", "title": "Finalize prototype v1 demo", "project": "capstone", "phase": "cap-p1", "status": "doing", "priority": "high", "deadline": "2026-05-20", "blocked": false, "notes": "", "files": [], "createdAt": "2026-05-01T00:00:00Z", "completedAt": null },
+    { "id": "cap-t2", "title": "Run user testing session (3 participants)", "project": "capstone", "phase": "cap-p1", "status": "todo", "priority": "medium", "deadline": "2026-05-28", "blocked": true, "notes": "Blocked on prototype", "files": [], "createdAt": "2026-05-01T00:00:00Z", "completedAt": null },
+    { "id": "cap-t3", "title": "Build pitch deck (10 slides)", "project": "capstone", "phase": "cap-p2", "status": "todo", "priority": "high", "deadline": "2026-06-05", "blocked": false, "notes": "", "files": [], "createdAt": "2026-05-01T00:00:00Z", "completedAt": null }
+  ],
+  "events": []
+}
