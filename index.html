@@ -321,6 +321,16 @@ body.sb-open #sidebar{transform:translateX(0)}
 .load-fill{height:100%;background:var(--accent);border-radius:1px;animation:loadpulse 1.2s ease-in-out infinite alternate}
 @keyframes loadpulse{from{width:0}to{width:100%}}
 
+/* ── AUTH GATE ── */
+#auth-gate{position:fixed;inset:0;background:var(--bg);z-index:700;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:0}
+.auth-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:40px 48px;display:flex;flex-direction:column;align-items:center;gap:20px;width:320px}
+.auth-logo{font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:4px;color:var(--accent);margin-bottom:4px}
+.auth-sub{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--text-muted);text-transform:uppercase;margin-top:-12px;margin-bottom:8px}
+.auth-input{width:100%;text-align:center;letter-spacing:3px;font-size:16px;padding:12px}
+.auth-btn{width:100%;padding:11px;background:var(--accent);color:#fff;border-radius:var(--radius);font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;transition:background .15s}
+.auth-btn:hover{background:#ff4040}
+.auth-err{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:1px;display:none}
+
 /* ── JARVIS CHAT ── */
 .jarvis-chat-section{padding:16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);display:flex;flex-direction:column}
 .jarvis-chat-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.5px;color:var(--text-muted);text-transform:uppercase;margin-bottom:10px}
@@ -347,7 +357,17 @@ body.sb-open #sidebar{transform:translateX(0)}
 </head>
 <body>
 
-<div id="loading">
+<div id="auth-gate">
+  <div class="auth-box">
+    <div class="auth-logo">CHRONICLE</div>
+    <div class="auth-sub">Personal Dashboard</div>
+    <input class="auth-input" id="auth-input" type="password" placeholder="••••••••" autocomplete="current-password">
+    <button class="auth-btn" onclick="submitAuth()">ENTER</button>
+    <div class="auth-err" id="auth-err">INCORRECT PASSWORD</div>
+  </div>
+</div>
+
+<div id="loading" style="display:none">
   <div class="load-logo">CHRONICLE</div>
   <div class="load-bar"><div class="load-fill"></div></div>
 </div>
@@ -528,6 +548,25 @@ body.sb-open #sidebar{transform:translateX(0)}
 
 <script>
 const GH = { owner:'rayyanali722-cmyk', repo:'chronicle', branch:'main', file:'data.json' };
+const AUTH_KEY = 'chronicle_auth';
+const PASS = 'chronicle2026'; // change this to your preferred password
+
+function checkAuth(){ return sessionStorage.getItem(AUTH_KEY)==='1'; }
+function submitAuth(){
+  const val=document.getElementById('auth-input').value;
+  const err=document.getElementById('auth-err');
+  if(val===PASS){
+    sessionStorage.setItem(AUTH_KEY,'1');
+    document.getElementById('auth-gate').style.display='none';
+    document.getElementById('loading').style.display='flex';
+    initApp();
+  } else {
+    err.style.display='block';
+    document.getElementById('auth-input').value='';
+    document.getElementById('auth-input').focus();
+    setTimeout(()=>err.style.display='none',2000);
+  }
+}
 
 const APP = {
   data: null, view:'grid', project:null,
@@ -719,9 +758,9 @@ function renderProject(pid,container){
       <div class="jarvis-chat-label">⚡ Ask Jarvis About This Project</div>
       <textarea id="jarvis-input-${pid}" placeholder="e.g. What should I focus on next? / Add a task to phase 2..." rows="4" style="flex:1;min-height:90px"></textarea>
       <div style="display:flex;align-items:center;gap:8px;margin-top:8px">
-        <button class="jarvis-send-btn" onclick="sendToJarvis('${pid}')">COPY + OPEN CLAUDE.AI</button>
+        <button class="jarvis-send-btn" onclick="sendToJarvis('${pid}')">⚡ COPY FOR JARVIS</button>
       </div>
-      <div style="font-size:11px;color:var(--text-muted);margin-top:6px;font-family:'JetBrains Mono',monospace">Copies project context + your message → paste in Claude.ai</div>
+      <div style="font-size:11px;color:var(--text-muted);margin-top:6px;font-family:'JetBrains Mono',monospace">Copies full context + your question → paste into Jarvis on Claude.ai</div>
     </div>
     <div class="proj-velocity-panel">
       <div class="vel-label">7-DAY VELOCITY</div>
@@ -1167,18 +1206,37 @@ function sendToJarvis(pid){
   const tasks=getProjectTasks(pid);
   const done=tasks.filter(t=>t.status==='done').length;
   const blocked=tasks.filter(t=>t.blocked&&t.status!=='done');
-  let ctx=`## Chronicle — ${p.name}\n**Date:** ${todayISO()} | **Progress:** ${calcProgress(pid)}% (${done}/${tasks.length} tasks)\n${p.deadline?`**Deadline:** ${p.deadline}\n`:''}\n`;
+  const todo=tasks.filter(t=>t.status==='todo'||t.status==='doing');
+  let ctx=`You are Jarvis, my personal project assistant for Chronicle.\n\n`;
+  ctx+=`## Project: ${p.name}\n`;
+  ctx+=`Date: ${todayISO()} | Progress: ${calcProgress(pid)}% (${done}/${tasks.length} tasks done)`;
+  if(p.deadline) ctx+=` | Deadline: ${p.deadline}`;
+  ctx+=`\n\n`;
   (p.phases||[]).forEach(ph=>{
     const pt=ph.taskIds.map(id=>getTaskById(id)).filter(Boolean);
-    ctx+=`### ${ph.name} (${pt.filter(t=>t.status==='done').length}/${pt.length})\n`;
-    pt.forEach(t=>{ ctx+=`- [${t.status.toUpperCase()}${t.blocked?' BLOCKED':''}] ${t.title}${t.deadline?' (due '+t.deadline+')':''}\n`; });
+    const pDone=pt.filter(t=>t.status==='done').length;
+    ctx+=`### ${ph.name} — ${pDone}/${pt.length} done\n`;
+    pt.forEach(t=>{
+      const tags=[t.status.toUpperCase()];
+      if(t.blocked) tags.push('BLOCKED');
+      if(t.priority) tags.push(t.priority.toUpperCase());
+      ctx+=`- [${tags.join(' | ')}] ${t.title}`;
+      if(t.deadline) ctx+=` (due ${t.deadline})`;
+      if(t.notes) ctx+=`\n  Notes: ${t.notes}`;
+      ctx+=`\n`;
+    });
+    ctx+=`\n`;
   });
-  if(blocked.length){ ctx+=`\n### Blocked\n`; blocked.forEach(t=>ctx+=`- ${t.title}: ${t.notes||'no details'}\n`); }
-  ctx+=`\n---\n${msg}`;
+  if(blocked.length){
+    ctx+=`### ⚠ Blocked Items\n`;
+    blocked.forEach(t=>ctx+=`- ${t.title}: ${t.notes||'no details'}\n`);
+    ctx+=`\n`;
+  }
+  ctx+=`---\n**My question:** ${msg}`;
   navigator.clipboard.writeText(ctx).then(()=>{
-    showToast('Copied — paste in Claude.ai ✓','success');
-    window.open('https://claude.ai','_blank');
-  }).catch(()=>showToast('Copy failed','error'));
+    showToast('Copied — paste into Jarvis (Claude.ai) ✓','success');
+    input.value='';
+  }).catch(()=>showToast('Copy failed — try again','error'));
 }
 
 // ── UTILS ──
@@ -1202,7 +1260,7 @@ function showToast(msg,type=''){
 function getDefaultData(){ return {meta:{lastUpdated:new Date().toISOString(),version:'2.0'},focus:{date:todayISO(),taskIds:[],note:''},projects:[],tasks:[],events:[]}; }
 
 // ── INIT ──
-window.addEventListener('DOMContentLoaded',async()=>{
+async function initApp(){
   if(window.innerWidth>768) document.body.classList.add('sb-open');
   await loadData();
   document.addEventListener('keydown',e=>{
@@ -1213,6 +1271,17 @@ window.addEventListener('DOMContentLoaded',async()=>{
     else if(document.getElementById('settings-modal').classList.contains('open')) closeSettingsModal();
   });
   setInterval(()=>loadData(),5*60*1000);
+}
+
+window.addEventListener('DOMContentLoaded',()=>{
+  if(checkAuth()){
+    document.getElementById('auth-gate').style.display='none';
+    document.getElementById('loading').style.display='flex';
+    initApp();
+  } else {
+    setTimeout(()=>document.getElementById('auth-input').focus(),100);
+    document.getElementById('auth-input').addEventListener('keydown',e=>{ if(e.key==='Enter') submitAuth(); });
+  }
 });
 </script>
 </body>
