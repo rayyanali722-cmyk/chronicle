@@ -672,7 +672,7 @@ function renderFocus(){
 function renderProjectsNav(){
   const nav=document.getElementById('projects-nav');
   nav.innerHTML='';
-  (APP.data.projects||[]).forEach(p=>{
+  Object.values(APP.data.projects||{}).forEach(p=>{
     const pct=calcProgress(p.id);
     const el=document.createElement('div');
     el.className='proj-nav-item'+(APP.project===p.id?' active':'');
@@ -689,7 +689,7 @@ function renderGrid(){
   const el=document.getElementById('view-grid');
   if(!APP.data){el.innerHTML='';return;}
   if(APP.project){ renderProject(APP.project,el); return; }
-  const projects=APP.data.projects||[];
+  const projects=Object.values(APP.data.projects||{});
   let html=`<div class="grid-header"><span class="grid-title">ALL PROJECTS — ${projects.length} ACTIVE</span><button onclick="openAddTaskModal(null,null)" style="padding:6px 14px;background:var(--accent);color:#fff;border-radius:var(--radius);font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:1px">+ TASK</button></div><div class="project-grid">`;
   projects.forEach(p=>{
     const pct=calcProgress(p.id);
@@ -799,7 +799,7 @@ function renderWeek(){
   days.forEach((d,i)=>{
     const iso=d.toISOString().split('T')[0];
     const isToday=iso===todayStr;
-    const dt=(APP.data.tasks||[]).filter(t=>t.deadline===iso);
+    const dt=Object.values(APP.data.tasks||{}).filter(t=>t.deadline===iso);
     html+=`<div class="week-day${isToday?' today':''}"><div class="wd-label">${DAYS[i]}</div><div class="wd-date">${d.getDate()}</div><div class="wd-tasks">
       ${dt.slice(0,5).map(t=>`<div class="wd-task${t.status==='done'?' done-task':''}" onclick="openTaskDrawer('${t.id}')">${escHtml(t.title)}</div>`).join('')}
       ${dt.length>5?`<div style="font-size:10px;color:var(--text-muted);padding:2px 4px">+${dt.length-5} more</div>`:''}
@@ -823,7 +823,7 @@ function renderMonth(){
   for(let day=1;day<=last.getDate();day++){
     const iso=`${y}-${String(m+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
     const isToday=iso===todayStr;
-    const dt=(APP.data.tasks||[]).filter(t=>t.deadline===iso);
+    const dt=Object.values(APP.data.tasks||{}).filter(t=>t.deadline===iso);
     html+=`<div class="month-cell${isToday?' today':''}"><div class="mc-date">${day}</div><div class="mc-events">
       ${dt.slice(0,3).map(t=>`<div class="mc-event" onclick="openTaskDrawer('${t.id}')" title="${escHtml(t.title)}">${escHtml(t.title)}</div>`).join('')}
       ${dt.length>3?`<div style="font-size:9px;color:var(--text-muted)">+${dt.length-3}</div>`:''}
@@ -838,7 +838,7 @@ function renderMonth(){
 function renderTable(){
   const el=document.getElementById('view-table');
   if(!APP.data){el.innerHTML='';return;}
-  let tasks=[...(APP.data.tasks||[])];
+  let tasks=Object.values(APP.data.tasks||{});
   const f=APP.tableFilters, s=APP.tableSort;
   if(f.project) tasks=tasks.filter(t=>t.project===f.project);
   if(f.status)  tasks=tasks.filter(t=>t.status===f.status);
@@ -849,7 +849,7 @@ function renderTable(){
   tasks.sort((a,b)=>{let av=a[s.col]||'9999',bv=b[s.col]||'9999';return s.dir==='asc'?(av<bv?-1:av>bv?1:0):(av>bv?-1:av<bv?1:0);});
   const arr=s.dir==='asc'?'↑':'↓';
   const th=(col,lbl)=>`<th onclick="sortTable('${col}')" class="${s.col===col?'sorted':''}">${lbl}${s.col===col?` ${arr}`:''}</th>`;
-  const projs=APP.data.projects||[];
+  const projs=Object.values(APP.data.projects||{});
   let html=`<div style="display:flex;justify-content:flex-end;margin-bottom:12px"><button onclick="openAddTaskModal(null,null)" style="padding:7px 16px;background:var(--accent);color:#fff;border-radius:var(--radius);font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:1px;transition:background .15s" onmouseover="this.style.background='#ff4040'" onmouseout="this.style.background='var(--accent)'">+ ADD TASK</button></div>
   <div class="table-wrap"><table class="task-table"><thead>
     <tr>${th('title','TASK')}${th('project','PROJECT')}${th('status','STATUS')}${th('priority','PRIORITY')}${th('deadline','DEADLINE')}</tr>
@@ -921,7 +921,7 @@ function openTaskDrawer(id){
 function renderDrawerBody(){
   const t=APP.drawerState;
   const proj=getProjectById(t.project);
-  const projs=APP.data.projects||[];
+  const projs=Object.values(APP.data.projects||{});
   const phases=proj?(proj.phases||[]):[];
   const inFocus=(APP.data.focus?.taskIds||[]).includes(t.id);
   const icons={todo:'',doing:'▶',done:'✓',blocked:'!'};
@@ -1008,15 +1008,14 @@ function saveDrawer(){
   t.deadline=document.getElementById('d-deadline')?.value||null;
   t.priority=document.getElementById('d-priority')?.value||t.priority;
   t.notes=document.getElementById('d-notes')?.value||'';
-  const idx=APP.data.tasks.findIndex(x=>x.id===t.id);
-  if(idx>-1) APP.data.tasks[idx]={...t};
+  APP.data.tasks[t.id]={...t};
   closeDrawer(); renderFocus(); renderProjectsNav(); renderActiveView(); saveData();
 }
 function deleteCurrentTask(){
   if(!APP.drawerTaskId||!confirm('Delete this task?')) return;
-  APP.data.tasks=APP.data.tasks.filter(t=>t.id!==APP.drawerTaskId);
+  delete APP.data.tasks[APP.drawerTaskId];
   if(APP.data.focus?.taskIds) APP.data.focus.taskIds=APP.data.focus.taskIds.filter(id=>id!==APP.drawerTaskId);
-  (APP.data.projects||[]).forEach(p=>(p.phases||[]).forEach(ph=>{ ph.taskIds=ph.taskIds.filter(id=>id!==APP.drawerTaskId); }));
+  Object.values(APP.data.projects||{}).forEach(p=>(p.phases||[]).forEach(ph=>{ ph.taskIds=ph.taskIds.filter(id=>id!==APP.drawerTaskId); }));
   closeDrawer(); renderFocus(); renderActiveView(); saveData();
 }
 function closeDrawer(){ document.getElementById('task-drawer').classList.remove('open'); APP.drawerTaskId=null; }
@@ -1024,7 +1023,7 @@ function drawerOutsideClick(e){ if(e.target.classList.contains('drawer-backdrop'
 
 // ── ADD TASK ──
 function openAddTaskModal(projId,phId){
-  const projs=APP.data.projects||[];
+  const projs=Object.values(APP.data.projects||{});
   const ps=document.getElementById('at-project');
   ps.innerHTML=projs.map(p=>`<option value="${p.id}"${p.id===projId?'selected':''}>${escHtml(p.name)}</option>`).join('');
   updatePhaseOptions(phId);
@@ -1045,7 +1044,7 @@ function submitAddTask(){
   if(!title){ showToast('Title is required','error'); return; }
   const id='task-'+Date.now();
   const task={id,title,project:document.getElementById('at-project').value,phase:document.getElementById('at-phase').value,status:'todo',priority:document.getElementById('at-priority').value,deadline:document.getElementById('at-deadline').value||null,blocked:false,notes:document.getElementById('at-notes').value,files:[],createdAt:new Date().toISOString(),completedAt:null};
-  APP.data.tasks.push(task);
+  APP.data.tasks[id]=task;
   const proj=getProjectById(task.project);
   const ph=proj?.phases?.find(p=>p.id===task.phase);
   if(ph) ph.taskIds.push(id);
@@ -1060,7 +1059,7 @@ function submitAddTask(){
 function openFocusModal(){
   const ids=(APP.data.focus?.taskIds)||[];
   const focusTasks=ids.map(id=>getTaskById(id)).filter(Boolean);
-  const others=(APP.data.tasks||[]).filter(t=>!ids.includes(t.id)&&t.status!=='done');
+  const others=Object.values(APP.data.tasks||{}).filter(t=>!ids.includes(t.id)&&t.status!=='done');
   let html='';
   if(focusTasks.length){
     html+=`<div class="focus-section-head">IN FOCUS (${focusTasks.length})</div>`;
@@ -1102,11 +1101,11 @@ function saveSettings(){ const t=document.getElementById('settings-token').value
 function copyJarvisContext(){
   const d=APP.data; const today=todayISO();
   const focus=(d.focus?.taskIds||[]).map(id=>getTaskById(id)).filter(Boolean);
-  const blocked=(d.tasks||[]).filter(t=>t.blocked&&t.status!=='done');
+  const blocked=Object.values(d.tasks||{}).filter(t=>t.blocked&&t.status!=='done');
   let ctx=`## Chronicle — Project Context\n**Date:** ${today}\n\n### Today's Focus\n`;
   focus.forEach(t=>{ ctx+=`- [${t.status.toUpperCase()}] ${t.title} (${getProjectById(t.project)?.name||'?'})\n`; });
   ctx+=`\n### Projects\n`;
-  (d.projects||[]).forEach(p=>{
+  Object.values(d.projects||{}).forEach(p=>{
     const pct=calcProgress(p.id);
     ctx+=`**${p.name}** — ${pct}% complete${p.deadline?' | Due: '+p.deadline:''}\n`;
     (p.phases||[]).forEach(ph=>{
@@ -1135,7 +1134,7 @@ function submitAddProject(){
   const phaseName=document.getElementById('ap-phase').value.trim();
   const phases=phaseName?[{id:'ph-'+Date.now(),name:phaseName,taskIds:[],order:0}]:[];
   const proj={id,name,status:document.getElementById('ap-status').value,deadline:document.getElementById('ap-deadline').value||null,phases};
-  APP.data.projects.push(proj);
+  APP.data.projects[id]=proj;
   closeAddProjectModal(); renderSidebar(); renderActiveView(); saveData(); showToast('Project created ✓','success');
 }
 
@@ -1145,8 +1144,8 @@ function deleteProject(pid){
   const taskIds=getProjectTasks(pid).map(t=>t.id);
   if(!confirm(`Delete "${proj.name}" and all ${taskIds.length} tasks? This cannot be undone.`)) return;
   if(APP.data.focus?.taskIds) APP.data.focus.taskIds=APP.data.focus.taskIds.filter(id=>!taskIds.includes(id));
-  APP.data.tasks=APP.data.tasks.filter(t=>t.project!==pid);
-  APP.data.projects=APP.data.projects.filter(p=>p.id!==pid);
+  Object.keys(APP.data.tasks).forEach(k=>{if(APP.data.tasks[k].project===pid)delete APP.data.tasks[k];});
+  delete APP.data.projects[pid];
   APP.project=null; renderSidebar(); renderGrid(); saveData(); showToast('Project deleted','success');
 }
 
@@ -1163,7 +1162,7 @@ function deletePhase(pid,phId){
   const ph=proj.phases.find(p=>p.id===phId); if(!ph) return;
   if(ph.taskIds.length>0&&!confirm(`Delete phase "${ph.name}" and its ${ph.taskIds.length} tasks?`)) return;
   if(APP.data.focus?.taskIds) APP.data.focus.taskIds=APP.data.focus.taskIds.filter(id=>!ph.taskIds.includes(id));
-  APP.data.tasks=APP.data.tasks.filter(t=>!ph.taskIds.includes(t.id));
+  ph.taskIds.forEach(id=>delete APP.data.tasks[id]);
   proj.phases=proj.phases.filter(p=>p.id!==phId);
   renderFocus(); renderActiveView(); saveData(); showToast('Phase deleted','success');
 }
@@ -1241,9 +1240,9 @@ function sendToJarvis(pid){
 
 // ── UTILS ──
 function modalOutsideClick(e,id){ if(e.target===document.getElementById(id)||e.target.classList.contains('modal-backdrop')) document.getElementById(id).classList.remove('open'); }
-function getProjectById(id){ return (APP.data?.projects||[]).find(p=>p.id===id); }
-function getTaskById(id){ return (APP.data?.tasks||[]).find(t=>t.id===id); }
-function getProjectTasks(pid){ return (APP.data?.tasks||[]).filter(t=>t.project===pid); }
+function getProjectById(id){ return APP.data?.projects?.[id]; }
+function getTaskById(id){ return APP.data?.tasks?.[id]; }
+function getProjectTasks(pid){ return Object.values(APP.data?.tasks||{}).filter(t=>t.project===pid); }
 function calcProgress(pid){ const t=getProjectTasks(pid); if(!t.length) return 0; return Math.round(t.filter(x=>x.status==='done').length/t.length*100); }
 function todayISO(){ return new Date().toISOString().split('T')[0]; }
 function daysUntil(d){ const dt=new Date(d+'T00:00:00'), td=new Date(); td.setHours(0,0,0,0); return Math.ceil((dt-td)/86400000); }
@@ -1257,7 +1256,7 @@ function showToast(msg,type=''){
   const t=document.getElementById('toast'); t.textContent=msg; t.className='show '+(type||'');
   clearTimeout(t._t); t._t=setTimeout(()=>t.className='',3000);
 }
-function getDefaultData(){ return {meta:{lastUpdated:new Date().toISOString(),version:'2.0'},focus:{date:todayISO(),taskIds:[],note:''},projects:[],tasks:[],events:[]}; }
+function getDefaultData(){ return {meta:{lastUpdated:new Date().toISOString(),version:'3.0'},focus:{date:todayISO(),taskIds:[],note:''},projects:{},tasks:{},events:{}}; }
 
 // ── INIT ──
 async function initApp(){
