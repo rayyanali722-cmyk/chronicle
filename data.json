@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-05-25T22:41:16.645Z",
+    "lastUpdated": "2026-05-25T22:41:32.523Z",
     "version": "3.0",
     "_owner": "any"
   },
@@ -289,6 +289,20 @@
       "notes": "",
       "files": [],
       "createdAt": "2026-05-25T21:02:42.273Z",
+      "completedAt": null
+    },
+    "task-1779748892521": {
+      "id": "task-1779748892521",
+      "title": "test task",
+      "project": "proj-1779748876642",
+      "phase": "",
+      "status": "todo",
+      "priority": "high",
+      "deadline": null,
+      "blocked": false,
+      "notes": "",
+      "files": [],
+      "createdAt": "2026-05-25T22:41:32.521Z",
       "completedAt": null
     }
   },
