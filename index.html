@@ -581,10 +581,22 @@ const APP = {
 // ── DATA ──
 async function loadData(force){
   try{
-    const url=`./data.json?t=${Date.now()}`;
-    const res=await fetch(url);
-    if(!res.ok) throw new Error();
-    APP.data=await res.json();
+    // Read through proxy if configured — avoids GitHub Pages CDN cache delay
+    let res;
+    if(PROXY_URL && !PROXY_URL.startsWith('REPLACE')){
+      res=await fetch(
+        `${PROXY_URL}/github/repos/${GH.owner}/${GH.repo}/contents/${GH.file}`,
+        {headers:{'X-Chronicle-Auth':PASS}}
+      );
+      if(!res.ok) throw new Error();
+      const ghData=await res.json();
+      // GitHub Contents API returns base64-encoded content
+      APP.data=JSON.parse(decodeURIComponent(escape(atob(ghData.content.replace(/\n/g,'')))));
+    } else {
+      res=await fetch(`./data.json?t=${Date.now()}`);
+      if(!res.ok) throw new Error();
+      APP.data=await res.json();
+    }
     APP.lastLoaded=new Date();
   }catch(e){
     if(!APP.data) APP.data=getDefaultData();
