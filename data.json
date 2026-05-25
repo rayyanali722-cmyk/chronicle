@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-05-25T23:10:44.944Z",
+    "lastUpdated": "2026-05-25T23:11:18.409Z",
     "version": "3.0",
     "_owner": "any"
   },
@@ -10,8 +10,8 @@
     "note": ""
   },
   "projects": {
-    "tov": {
-      "id": "tov",
+    "tov-startup": {
+      "id": "tov-startup",
       "_owner": "jarvis",
       "name": "TOV End Effector Startup",
       "status": "active",
@@ -22,9 +22,17 @@
           "id": "tov-p1",
           "name": "Documentation",
           "taskIds": [
-            "tov-t1"
+            "jarvis-t-1",
+            "jarvis-t-2",
+            "jarvis-t-3"
           ],
           "order": 0
+        },
+        {
+          "id": "tov-p2",
+          "name": "Brainstorming",
+          "taskIds": [],
+          "order": 1
         }
       ]
     },
@@ -40,9 +48,9 @@
           "id": "js-p1",
           "name": "Job Search",
           "taskIds": [
-            "js-t1",
-            "js-t2",
-            "js-t3"
+            "jarvis-t-4",
+            "jarvis-t-5",
+            "jarvis-t-6"
           ],
           "order": 0
         }
@@ -60,8 +68,8 @@
           "id": "cswp-p1",
           "name": "Study",
           "taskIds": [
-            "cswp-t1",
-            "cswp-t2"
+            "jarvis-t-7",
+            "jarvis-t-8"
           ],
           "order": 0
         },
@@ -75,11 +83,11 @@
     }
   },
   "tasks": {
-    "tov-t1": {
-      "id": "tov-t1",
+    "jarvis-t-1": {
+      "id": "jarvis-t-1",
       "_owner": "jarvis",
       "title": "Draft shareholder document",
-      "project": "tov",
+      "project": "tov-startup",
       "phase": "tov-p1",
       "status": "todo",
       "priority": "high",
@@ -88,11 +96,11 @@
       "notes": "",
       "files": [],
       "parentId": null,
-      "createdAt": "2026-05-25T23:05:08.542Z",
+      "createdAt": "2026-05-25T23:11:18.409Z",
       "completedAt": null
     },
-    "js-t1": {
-      "id": "js-t1",
+    "jarvis-t-4": {
+      "id": "jarvis-t-4",
       "_owner": "jarvis",
       "title": "Update portfolio",
       "project": "job-search",
@@ -104,11 +112,11 @@
       "notes": "",
       "files": [],
       "parentId": null,
-      "createdAt": "2026-05-25T23:05:08.542Z",
+      "createdAt": "2026-05-25T23:11:18.409Z",
       "completedAt": null
     },
-    "js-t2": {
-      "id": "js-t2",
+    "jarvis-t-5": {
+      "id": "jarvis-t-5",
       "_owner": "jarvis",
       "title": "Update resume",
       "project": "job-search",
@@ -120,11 +128,11 @@
       "notes": "",
       "files": [],
       "parentId": null,
-      "createdAt": "2026-05-25T23:05:08.542Z",
+      "createdAt": "2026-05-25T23:11:18.409Z",
       "completedAt": null
     },
-    "js-t3": {
-      "id": "js-t3",
+    "jarvis-t-6": {
+      "id": "jarvis-t-6",
       "_owner": "jarvis",
       "title": "Reach out to Fatima ATS",
       "project": "job-search",
@@ -136,11 +144,11 @@
       "notes": "",
       "files": [],
       "parentId": null,
-      "createdAt": "2026-05-25T23:05:08.542Z",
+      "createdAt": "2026-05-25T23:11:18.409Z",
       "completedAt": null
     },
-    "cswp-t1": {
-      "id": "cswp-t1",
+    "jarvis-t-7": {
+      "id": "jarvis-t-7",
       "_owner": "jarvis",
       "title": "Read test files from Mehdi",
       "project": "cswp",
@@ -152,13 +160,13 @@
       "notes": "",
       "files": [],
       "parentId": null,
-      "createdAt": "2026-05-25T23:05:08.542Z",
+      "createdAt": "2026-05-25T23:11:18.409Z",
       "completedAt": null
     },
-    "cswp-t2": {
-      "id": "cswp-t2",
+    "jarvis-t-8": {
+      "id": "jarvis-t-8",
       "_owner": "jarvis",
-      "title": "Review CSWP practice problems",
+      "title": "Review practice problems",
       "project": "cswp",
       "phase": "cswp-p1",
       "status": "todo",
@@ -168,7 +176,7 @@
       "notes": "Official CSWP sample exam PDF: https://www.solidworks.com/sites/default/files/cswpsampleexam.pdf\nMySolidWorks sample exams: https://my.solidworks.com/training/path/15/cswp-sample-exams",
       "files": [],
       "parentId": null,
-      "createdAt": "2026-05-25T23:05:08.542Z",
+      "createdAt": "2026-05-25T23:11:18.409Z",
       "completedAt": null
     }
   },
