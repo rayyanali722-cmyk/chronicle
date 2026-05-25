@@ -12,6 +12,9 @@
 
 const GH_API = 'https://api.github.com';
 
+// Only this exact path is proxied — prevents using the Worker as a general GitHub proxy
+const ALLOWED_GH_PATH = '/repos/rayyanali722-cmyk/chronicle/contents/data.json';
+
 // Origins allowed to call this Worker
 const ALLOWED_ORIGINS = [
   'https://rayyanali722-cmyk.github.io',
@@ -48,18 +51,18 @@ export default {
     }
 
     // ── Route validation ──────────────────────────────────────────────────
-    // Only allow /github/* paths to prevent open proxy abuse
+    // Whitelist the exact path — prevents using this as a general GitHub proxy
     const url = new URL(request.url);
-    if (!url.pathname.startsWith('/github/')) {
+    const incomingPath = url.pathname.replace(/^\/github/, '');
+    if (incomingPath !== ALLOWED_GH_PATH) {
       return new Response(JSON.stringify({ error: 'Not found' }), {
         status: 404,
         headers: { 'Content-Type': 'application/json', ...corsHeaders },
       });
     }
 
-    // Strip /github prefix → forward to GitHub API
-    const ghPath = url.pathname.replace(/^\/github/, '') + url.search;
-    const ghURL = `${GH_API}${ghPath}`;
+    // Construct GitHub API URL — only ever points to data.json
+    const ghURL = `${GH_API}${ALLOWED_GH_PATH}${url.search}`;
 
     // ── Forward to GitHub ─────────────────────────────────────────────────
     const ghHeaders = {

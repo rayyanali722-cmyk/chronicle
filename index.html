@@ -602,8 +602,7 @@ async function saveData(){
   APP.saving=true;
   document.getElementById('save-indicator').style.display='inline';
   APP.data.meta.lastUpdated=new Date().toISOString();
-  const auth=sessionStorage.getItem(AUTH_KEY)||'';
-  const proxyHeaders={'Content-Type':'application/json','X-Chronicle-Auth':auth};
+  const proxyHeaders={'Content-Type':'application/json','X-Chronicle-Auth':PASS};
   try{
     const shaRes=await fetch(
       `${PROXY_URL}/github/repos/${GH.owner}/${GH.repo}/contents/${GH.file}`,
