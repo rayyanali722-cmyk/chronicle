@@ -1,66 +1,64 @@
 {
   "meta": {
-    "lastUpdated": "2026-05-25T22:41:51.406Z",
+    "lastUpdated": "2026-05-25T23:05:08.542Z",
     "version": "3.0",
     "_owner": "any"
   },
   "focus": {
-    "date": "2026-05-15",
-    "taskIds": [
-      "js-t1",
-      "cap-t1",
-      "cswp-t2",
-      "task-1779742962273"
-    ],
-    "note": "Get the resume updated and keep capstone momentum going."
+    "date": "2026-05-25",
+    "taskIds": [],
+    "note": ""
   },
   "projects": {
+    "tov": {
+      "id": "tov",
+      "_owner": "jarvis",
+      "name": "TOV End Effector Startup",
+      "status": "active",
+      "deadline": "2026-06-07",
+      "parentId": null,
+      "phases": [
+        {
+          "id": "tov-p1",
+          "name": "Documentation",
+          "taskIds": [
+            "tov-t1"
+          ],
+          "order": 0
+        }
+      ]
+    },
     "job-search": {
       "id": "job-search",
-      "_owner": "manual",
+      "_owner": "jarvis",
       "name": "Job Search",
       "status": "active",
-      "deadline": "2026-08-15",
+      "deadline": null,
+      "parentId": null,
       "phases": [
         {
           "id": "js-p1",
-          "name": "Resume & Portfolio",
+          "name": "Job Search",
           "taskIds": [
             "js-t1",
             "js-t2",
-            "task-1779742962273"
+            "js-t3"
           ],
           "order": 0
-        },
-        {
-          "id": "js-p2",
-          "name": "Applications",
-          "taskIds": [
-            "js-t3",
-            "js-t4"
-          ],
-          "order": 1
-        },
-        {
-          "id": "js-p3",
-          "name": "Interview Prep",
-          "taskIds": [
-            "js-t5"
-          ],
-          "order": 2
         }
       ]
     },
     "cswp": {
       "id": "cswp",
-      "_owner": "manual",
+      "_owner": "jarvis",
       "name": "CSWP Cert Prep",
       "status": "active",
-      "deadline": "2026-07-01",
+      "deadline": "2026-06-10",
+      "parentId": null,
       "phases": [
         {
           "id": "cswp-p1",
-          "name": "Study Modules",
+          "name": "Study",
           "taskIds": [
             "cswp-t1",
             "cswp-t2"
@@ -70,246 +68,107 @@
         {
           "id": "cswp-p2",
           "name": "Practice Exams",
-          "taskIds": [
-            "cswp-t3"
-          ],
-          "order": 1
-        }
-      ]
-    },
-    "capstone": {
-      "id": "capstone",
-      "_owner": "manual",
-      "name": "Capstone Startup",
-      "status": "active",
-      "deadline": "2026-06-15",
-      "phases": [
-        {
-          "id": "cap-p1",
-          "name": "Prototype",
-          "taskIds": [
-            "cap-t1",
-            "cap-t2"
-          ],
-          "order": 0
-        },
-        {
-          "id": "cap-p2",
-          "name": "Pitch Deck",
-          "taskIds": [
-            "cap-t3"
-          ],
-          "order": 1
-        }
-      ]
-    },
-    "proj-1779748876642": {
-      "id": "proj-1779748876642",
-      "name": "test",
-      "status": "active",
-      "deadline": null,
-      "phases": [
-        {
-          "id": "ph-1779748911405",
-          "name": "testttt",
           "taskIds": [],
-          "order": 0
+          "order": 1
         }
       ]
     }
   },
   "tasks": {
+    "tov-t1": {
+      "id": "tov-t1",
+      "_owner": "jarvis",
+      "title": "Draft shareholder document",
+      "project": "tov",
+      "phase": "tov-p1",
+      "status": "todo",
+      "priority": "high",
+      "deadline": "2026-06-07",
+      "blocked": false,
+      "notes": "",
+      "files": [],
+      "parentId": null,
+      "createdAt": "2026-05-25T23:05:08.542Z",
+      "completedAt": null
+    },
     "js-t1": {
       "id": "js-t1",
-      "_owner": "manual",
-      "title": "Update resume with capstone project",
+      "_owner": "jarvis",
+      "title": "Update portfolio",
       "project": "job-search",
       "phase": "js-p1",
-      "status": "todo",
-      "priority": "high",
-      "deadline": "2026-05-18",
-      "blocked": false,
-      "notes": "",
-      "files": [],
-      "createdAt": "2026-05-14T00:00:00Z",
-      "completedAt": null
-    },
-    "js-t2": {
-      "id": "js-t2",
-      "_owner": "manual",
-      "title": "Refresh LinkedIn headline and about section",
-      "project": "job-search",
-      "phase": "js-p1",
-      "status": "done",
-      "priority": "medium",
-      "deadline": "2026-05-21",
-      "blocked": false,
-      "notes": "",
-      "files": [],
-      "createdAt": "2026-05-14T00:00:00Z",
-      "completedAt": "2026-05-25T21:02:04.148Z"
-    },
-    "js-t3": {
-      "id": "js-t3",
-      "_owner": "manual",
-      "title": "Apply to 5 engineering roles",
-      "project": "job-search",
-      "phase": "js-p2",
-      "status": "done",
-      "priority": "high",
-      "deadline": "2026-05-24",
-      "blocked": true,
-      "notes": "Blocked on resume update",
-      "files": [],
-      "createdAt": "2026-05-14T00:00:00Z",
-      "completedAt": "2026-05-25T20:25:39.153Z"
-    },
-    "js-t4": {
-      "id": "js-t4",
-      "_owner": "manual",
-      "title": "Follow up on pending applications",
-      "project": "job-search",
-      "phase": "js-p2",
-      "status": "done",
-      "priority": "medium",
-      "deadline": "2026-05-28",
-      "blocked": false,
-      "notes": "",
-      "files": [],
-      "createdAt": "2026-05-14T00:00:00Z",
-      "completedAt": "2026-05-14T18:35:42.386Z"
-    },
-    "js-t5": {
-      "id": "js-t5",
-      "_owner": "manual",
-      "title": "Complete STAR method practice (3 stories)",
-      "project": "job-search",
-      "phase": "js-p3",
-      "status": "todo",
-      "priority": "medium",
-      "deadline": "2026-06-01",
-      "blocked": false,
-      "notes": "",
-      "files": [],
-      "createdAt": "2026-05-14T00:00:00Z",
-      "completedAt": null
-    },
-    "cswp-t1": {
-      "id": "cswp-t1",
-      "_owner": "manual",
-      "title": "Review Part Modeling module",
-      "project": "cswp",
-      "phase": "cswp-p1",
-      "status": "done",
-      "priority": "high",
-      "deadline": "2026-05-10",
-      "blocked": false,
-      "notes": "",
-      "files": [],
-      "createdAt": "2026-05-01T00:00:00Z",
-      "completedAt": "2026-05-10T12:00:00Z"
-    },
-    "cswp-t2": {
-      "id": "cswp-t2",
-      "_owner": "manual",
-      "title": "Review Assembly & Drawing modules",
-      "project": "cswp",
-      "phase": "cswp-p1",
-      "status": "todo",
-      "priority": "high",
-      "deadline": "2026-05-25",
-      "blocked": false,
-      "notes": "",
-      "files": [],
-      "createdAt": "2026-05-01T00:00:00Z",
-      "completedAt": null
-    },
-    "cswp-t3": {
-      "id": "cswp-t3",
-      "_owner": "manual",
-      "title": "Complete 2 full practice exams",
-      "project": "cswp",
-      "phase": "cswp-p2",
-      "status": "todo",
-      "priority": "high",
-      "deadline": "2026-06-15",
-      "blocked": true,
-      "notes": "Blocked on module review",
-      "files": [],
-      "createdAt": "2026-05-01T00:00:00Z",
-      "completedAt": null
-    },
-    "cap-t1": {
-      "id": "cap-t1",
-      "_owner": "manual",
-      "title": "Finalize prototype v1 demo",
-      "project": "capstone",
-      "phase": "cap-p1",
-      "status": "doing",
-      "priority": "high",
-      "deadline": "2026-05-20",
-      "blocked": false,
-      "notes": "",
-      "files": [],
-      "createdAt": "2026-05-01T00:00:00Z",
-      "completedAt": null
-    },
-    "cap-t2": {
-      "id": "cap-t2",
-      "_owner": "manual",
-      "title": "Run user testing session (3 participants)",
-      "project": "capstone",
-      "phase": "cap-p1",
-      "status": "todo",
-      "priority": "medium",
-      "deadline": "2026-05-28",
-      "blocked": true,
-      "notes": "Blocked on prototype",
-      "files": [],
-      "createdAt": "2026-05-01T00:00:00Z",
-      "completedAt": null
-    },
-    "cap-t3": {
-      "id": "cap-t3",
-      "_owner": "manual",
-      "title": "Build pitch deck (10 slides)",
-      "project": "capstone",
-      "phase": "cap-p2",
-      "status": "doing",
-      "priority": "high",
-      "deadline": "2026-06-05",
-      "blocked": false,
-      "notes": "",
-      "files": [],
-      "createdAt": "2026-05-01T00:00:00Z",
-      "completedAt": null
-    },
-    "task-1779742962273": {
-      "id": "task-1779742962273",
-      "title": "test task",
-      "project": "job-search",
-      "phase": "js-p1",
-      "status": "todo",
-      "priority": "high",
-      "deadline": "2026-05-26",
-      "blocked": false,
-      "notes": "",
-      "files": [],
-      "createdAt": "2026-05-25T21:02:42.273Z",
-      "completedAt": null
-    },
-    "task-1779748892521": {
-      "id": "task-1779748892521",
-      "title": "test task",
-      "project": "proj-1779748876642",
-      "phase": "",
       "status": "todo",
       "priority": "high",
       "deadline": null,
       "blocked": false,
       "notes": "",
       "files": [],
-      "createdAt": "2026-05-25T22:41:32.521Z",
+      "parentId": null,
+      "createdAt": "2026-05-25T23:05:08.542Z",
+      "completedAt": null
+    },
+    "js-t2": {
+      "id": "js-t2",
+      "_owner": "jarvis",
+      "title": "Update resume",
+      "project": "job-search",
+      "phase": "js-p1",
+      "status": "todo",
+      "priority": "high",
+      "deadline": null,
+      "blocked": false,
+      "notes": "",
+      "files": [],
+      "parentId": null,
+      "createdAt": "2026-05-25T23:05:08.542Z",
+      "completedAt": null
+    },
+    "js-t3": {
+      "id": "js-t3",
+      "_owner": "jarvis",
+      "title": "Reach out to Fatima ATS",
+      "project": "job-search",
+      "phase": "js-p1",
+      "status": "todo",
+      "priority": "medium",
+      "deadline": null,
+      "blocked": false,
+      "notes": "",
+      "files": [],
+      "parentId": null,
+      "createdAt": "2026-05-25T23:05:08.542Z",
+      "completedAt": null
+    },
+    "cswp-t1": {
+      "id": "cswp-t1",
+      "_owner": "jarvis",
+      "title": "Read test files from Mehdi",
+      "project": "cswp",
+      "phase": "cswp-p1",
+      "status": "todo",
+      "priority": "high",
+      "deadline": null,
+      "blocked": false,
+      "notes": "",
+      "files": [],
+      "parentId": null,
+      "createdAt": "2026-05-25T23:05:08.542Z",
+      "completedAt": null
+    },
+    "cswp-t2": {
+      "id": "cswp-t2",
+      "_owner": "jarvis",
+      "title": "Review CSWP practice problems",
+      "project": "cswp",
+      "phase": "cswp-p1",
+      "status": "todo",
+      "priority": "high",
+      "deadline": null,
+      "blocked": false,
+      "notes": "Official CSWP sample exam PDF: https://www.solidworks.com/sites/default/files/cswpsampleexam.pdf\nMySolidWorks sample exams: https://my.solidworks.com/training/path/15/cswp-sample-exams",
+      "files": [],
+      "parentId": null,
+      "createdAt": "2026-05-25T23:05:08.542Z",
       "completedAt": null
     }
   },
