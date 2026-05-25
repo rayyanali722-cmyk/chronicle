@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-05-25T21:14:57.732Z",
+    "lastUpdated": "2026-05-25T21:16:24.502Z",
     "version": "3.0",
     "_owner": "any"
   },
@@ -283,14 +283,14 @@
       "title": "test task",
       "project": "job-search",
       "phase": "js-p1",
-      "status": "todo",
+      "status": "done",
       "priority": "high",
       "deadline": "2026-05-26",
       "blocked": false,
       "notes": "",
       "files": [],
       "createdAt": "2026-05-25T21:02:42.273Z",
-      "completedAt": null
+      "completedAt": "2026-05-25T21:16:24.498Z"
     },
     "task-1779743697727": {
       "id": "task-1779743697727",
