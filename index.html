@@ -772,6 +772,19 @@ function renderProject(pid,container){
       </div>
     </div>`;
   });
+  // Safety net: show tasks that belong to this project but aren't in any phase's taskIds
+  const allPhaseTaskIds=new Set((p.phases||[]).flatMap(ph=>ph.taskIds));
+  const orphans=Object.values(APP.data.tasks||{}).filter(t=>t.project===pid&&!allPhaseTaskIds.has(t.id));
+  if(orphans.length){
+    const od=orphans.filter(t=>t.status==='done').length;
+    html+=`<div class="phase-block" id="ph-orphan-${pid}">
+      <div class="phase-block-header" onclick="this.closest('.phase-block').classList.toggle('collapsed')">
+        <span class="phase-block-title" style="color:var(--text-muted)">UNCATEGORIZED</span>
+        <div class="phase-block-meta"><span class="phase-progress">${od}/${orphans.length}</span><span class="phase-chevron">▾</span></div>
+      </div>
+      <div class="phase-tasks">${orphans.map(t=>renderTaskRow(t)).join('')}</div>
+    </div>`;
+  }
   html+=`<button onclick="addPhase('${pid}')" style="margin-top:4px;padding:8px 14px;border:1px dashed var(--border);border-radius:var(--radius);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;color:var(--text-muted);text-transform:uppercase;width:100%;transition:all .15s" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-muted)'">+ ADD PHASE</button>
   <div class="proj-bottom-row">
     <div class="jarvis-chat-section">
@@ -1056,7 +1069,12 @@ function openAddTaskModal(projId,phId){
 function updatePhaseOptions(selPhId){
   const pid=document.getElementById('at-project').value;
   const proj=getProjectById(pid);
-  document.getElementById('at-phase').innerHTML=(proj?.phases||[]).map(ph=>`<option value="${ph.id}"${ph.id===selPhId?'selected':''}>${escHtml(ph.name)}</option>`).join('');
+  const phases=proj?.phases||[];
+  if(phases.length===0){
+    document.getElementById('at-phase').innerHTML='<option value="">New "Tasks" phase (auto-created)</option>';
+  } else {
+    document.getElementById('at-phase').innerHTML=phases.map(ph=>`<option value="${ph.id}"${ph.id===selPhId?'selected':''}>${escHtml(ph.name)}</option>`).join('');
+  }
 }
 function closeAddTaskModal(){ document.getElementById('add-task-modal').classList.remove('open'); }
 function submitAddTask(){
@@ -1066,7 +1084,16 @@ function submitAddTask(){
   const task={id,title,project:document.getElementById('at-project').value,phase:document.getElementById('at-phase').value,status:'todo',priority:document.getElementById('at-priority').value,deadline:document.getElementById('at-deadline').value||null,blocked:false,notes:document.getElementById('at-notes').value,files:[],createdAt:new Date().toISOString(),completedAt:null};
   APP.data.tasks[id]=task;
   const proj=getProjectById(task.project);
-  const ph=proj?.phases?.find(p=>p.id===task.phase);
+  let ph=proj?.phases?.find(p=>p.id===task.phase);
+  if(!ph && proj){
+    // No matching phase (project has none yet) — auto-create a default "Tasks" phase
+    if(!proj.phases) proj.phases=[];
+    const phId='ph-'+Date.now();
+    const newPh={id:phId,name:'Tasks',taskIds:[],order:0};
+    proj.phases.push(newPh);
+    task.phase=phId;
+    ph=newPh;
+  }
   if(ph) ph.taskIds.push(id);
   if(document.getElementById('at-focus').checked){
     if(!APP.data.focus) APP.data.focus={date:todayISO(),taskIds:[],note:''};
