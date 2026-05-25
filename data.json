@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-05-25T21:02:04.149Z",
+    "lastUpdated": "2026-05-25T21:02:42.275Z",
     "version": "3.0",
     "_owner": "any"
   },
@@ -9,7 +9,8 @@
     "taskIds": [
       "js-t1",
       "cap-t1",
-      "cswp-t2"
+      "cswp-t2",
+      "task-1779742962273"
     ],
     "note": "Get the resume updated and keep capstone momentum going."
   },
@@ -26,7 +27,8 @@
           "name": "Resume & Portfolio",
           "taskIds": [
             "js-t1",
-            "js-t2"
+            "js-t2",
+            "task-1779742962273"
           ],
           "order": 0
         },
@@ -266,6 +268,20 @@
       "notes": "",
       "files": [],
       "createdAt": "2026-05-01T00:00:00Z",
+      "completedAt": null
+    },
+    "task-1779742962273": {
+      "id": "task-1779742962273",
+      "title": "test task",
+      "project": "job-search",
+      "phase": "js-p1",
+      "status": "todo",
+      "priority": "high",
+      "deadline": "2026-05-26",
+      "blocked": false,
+      "notes": "",
+      "files": [],
+      "createdAt": "2026-05-25T21:02:42.273Z",
       "completedAt": null
     }
   },
