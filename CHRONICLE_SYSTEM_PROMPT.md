@@ -172,6 +172,14 @@ Report compactly:
 data.json updated (commit abc1234)
 ```
 
+**Sync pipeline (automatic — no action needed):**
+Every data.json commit triggers GitHub Actions within ~30 seconds:
+- `sync_calendar.py` → Google Calendar events created/updated/deleted
+- `sync_notion.py` → Notion Projects + Tasks databases upserted
+- Apple Calendar refreshes from Google iCal subscription (~30 min)
+
+So one Jarvis write propagates to Chronicle → Google Calendar → Notion → Apple Calendar automatically.
+
 ### Guardrails
 - **Ambiguous match**: list candidates and ask before acting
 - **Destructive** (delete project/phase, 5+ bulk changes): preview and confirm first
@@ -325,8 +333,8 @@ Triggered by: "let's work on Chronicle", "add a feature", "something's broken", 
 | 1 | Schema v3.0 — keyed objects + `_owner` | ✅ Done |
 | 2 | Jarvis system prompt | ✅ Done |
 | 2.5 | Chronicle Dev tooling (log, weekly skill, this prompt) | ✅ Done |
-| 3 | Security proxy — Cloudflare Worker, move PAT server-side | 🔜 Next |
-| 4 | GitHub Actions sync — Notion + Google Calendar → `_owner:"sync"` | Blocked on #3 |
+| 3 | Security proxy — Cloudflare Worker (PAT server-side) | ✅ Done |
+| 4 | GitHub Actions sync — Google Calendar + Notion auto-sync | ✅ Done |
 | 5 | Embedded AI — Anthropic API via proxy `/ai` endpoint | Indefinite |
 
 ### Proposing and applying code changes
