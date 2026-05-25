@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-05-25T23:05:08.542Z",
+    "lastUpdated": "2026-05-25T23:10:44.309Z",
     "version": "3.0",
     "_owner": "any"
   },
@@ -81,7 +81,7 @@
       "title": "Draft shareholder document",
       "project": "tov",
       "phase": "tov-p1",
-      "status": "todo",
+      "status": "doing",
       "priority": "high",
       "deadline": "2026-06-07",
       "blocked": false,
