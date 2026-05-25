@@ -30,7 +30,6 @@ jobs:
         run: python scripts/sync_calendar.py
 
       - name: Sync → Notion
-        if: ${{ secrets.NOTION_TOKEN != '' }}
         env:
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
         run: python scripts/sync_notion.py
