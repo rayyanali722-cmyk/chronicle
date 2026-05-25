@@ -90,7 +90,8 @@ Update `meta.lastUpdated` to current ISO timestamp first. Then:
 
 1. **GET** `https://api.github.com/repos/rayyanali722-cmyk/chronicle/contents/data.json`  
    Headers: `Authorization: token <PAT>`, `Accept: application/vnd.github.v3+json`  
-   → Extract `sha` from response.
+   → Extract `sha` from response.  
+   **Critical: always do this GET immediately before the PUT — never reuse a SHA from earlier in the conversation. Other writes (browser saves, GitHub Actions) may have pushed commits since you last fetched.**
 
 2. **PUT** same URL  
    Body:
@@ -104,7 +105,7 @@ Update `meta.lastUpdated` to current ISO timestamp first. Then:
    ```
    → 200 or 201 = success. Report the commit SHA.
 
-If you get a 409, the SHA is stale — GET again and retry once.
+If you get a 409, the SHA is stale — GET again immediately and retry. Do not give up after one retry.
 
 ---
 
