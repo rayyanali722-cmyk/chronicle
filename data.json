@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-05-15T00:00:00.000Z",
+    "lastUpdated": "2026-05-25T20:22:43.470Z",
     "version": "3.0",
     "_owner": "any"
   },
@@ -139,7 +139,7 @@
       "title": "Apply to 5 engineering roles",
       "project": "job-search",
       "phase": "js-p2",
-      "status": "todo",
+      "status": "doing",
       "priority": "high",
       "deadline": "2026-05-24",
       "blocked": true,
