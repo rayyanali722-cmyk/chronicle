@@ -23,9 +23,9 @@ GitHub Pages (static host)
   └── CHRONICLE_LOG.md  ← append-only history, velocity, lessons
   └── HANDOFF.md        ← session handoff for Claude Code
 
-Write path: browser → GitHub Contents API (PUT) → data.json commit
+Write path: browser → Cloudflare Worker proxy → GitHub Contents API (PUT) → data.json commit
 Read path:  browser → ./data.json (relative URL, works local + Pages)
-Auth:       GitHub PAT stored in localStorage('chronicle_token')
+Auth:       PAT held server-side in Cloudflare Worker secret (Priority 3 complete)
 Session:    Password gate via sessionStorage('chronicle_auth')
 ```
 
@@ -184,10 +184,9 @@ const APP = {
 ## How to Edit the App
 
 1. **Edit:** `C:\Users\owner\ClaudeProjects\chronicle\index.html`
-2. **Sync:** Copy to `C:\Users\owner\OneDrive - University of Guelph\Documents\Claude\chronicle-mockup\index.html`
-3. **Preview:** Port 3457 serves ClaudeProjects/chronicle (working copy)
-4. **Verify:** Use the preview tools — snapshot first (structure), screenshot for visual
-5. **Push:** Stage → `git pull --rebase` → commit → push from chronicle-mockup
+2. **Preview:** Port 3457 serves `C:\Users\owner\ClaudeProjects\chronicle` (this is the git repo)
+3. **Verify:** Use the preview tools — snapshot first (structure), screenshot for visual
+4. **Push:** Stage → `git pull --rebase` → commit → push from `C:\Users\owner\ClaudeProjects\chronicle`
 
 **Always read index.html before editing** — ~1300 lines, Edit tool requires a prior read.
 

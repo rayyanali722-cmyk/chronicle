@@ -22,7 +22,6 @@ as his primary project-tracking dashboard.
 - **compute script**: `C:\Users\owner\ClaudeProjects\chronicle\skills\chronicle-weekly\scripts\compute_metrics.js`
 - **Obsidian output**: `C:\Users\owner\ClaudeProjects\chronicle\weekly-summaries\<YYYY-MM-DD>.md`
 - **Chronicle log**: `C:\Users\owner\ClaudeProjects\chronicle\CHRONICLE_LOG.md`
-- **Mockup sync**: `C:\Users\owner\OneDrive - University of Guelph\Documents\Claude\chronicle-mockup\weekly-summaries\`
 
 ---
 
@@ -153,13 +152,6 @@ _Add any lessons or session notes here._
 
 ---
 
-## Step 4 — Sync to chronicle-mockup
-
-Copy the generated `.md` file to:
-`C:\Users\owner\OneDrive - University of Guelph\Documents\Claude\chronicle-mockup\weekly-summaries\<date>.md`
-
----
-
-## Step 5 — Report back
+## Step 4 — Report back
 
 4–5 lines: velocity, project progress percentages, blocker count, output file path, log updated.

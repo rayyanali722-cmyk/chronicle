@@ -22,9 +22,9 @@ GitHub Pages (static host)
   └── index.html        ← entire app (HTML + CSS + JS, ~1260 lines)
   └── data.json         ← entire database (projects, tasks, focus, events)
 
-Write path: browser → GitHub Contents API (PUT) → data.json commit
+Write path: browser → Cloudflare Worker proxy → GitHub Contents API (PUT) → data.json commit
 Read path:  browser → ./data.json (relative URL, works local + Pages)
-Auth:       GitHub PAT stored in localStorage('chronicle_token')
+Auth:       PAT held server-side in Cloudflare Worker secret (Priority 3 complete)
 Session:    Password gate via sessionStorage('chronicle_auth')
 ```
 
@@ -32,9 +32,6 @@ Session:    Password gate via sessionStorage('chronicle_auth')
 ```js
 const GH = { owner:'rayyanali722-cmyk', repo:'chronicle', branch:'main', file:'data.json' };
 ```
-
-**PAT (stored in browser localStorage, not in code):**  
-`ghp_…` — repo scope (do not commit the actual token)
 
 **Why this architecture (from LLM Council session):**
 - GitHub Pages = accessible from any device over cellular without Dell being on
@@ -48,19 +45,17 @@ const GH = { owner:'rayyanali722-cmyk', repo:'chronicle', branch:'main', file:'d
 
 | File | Purpose |
 |------|---------|
-| `C:\Users\owner\ClaudeProjects\chronicle\index.html` | The entire app. Edit HERE first. |
-| `C:\Users\owner\OneDrive - University of Guelph\Documents\Claude\chronicle-mockup\index.html` | Git-tracked copy. Sync with `cp` after editing. |
-| `chronicle-mockup/data.json` | The live database. Real user data. |
-| `chronicle-mockup/v2.html` | Original design reference. Do NOT modify. Aesthetic baseline. |
-| `.claude/launch.json` (Documents/Claude) | Preview server configs (port 3456 = mockup, port 3457 = ClaudeProjects) |
+| `C:\Users\owner\ClaudeProjects\chronicle\index.html` | The entire app. Edit here. |
+| `C:\Users\owner\ClaudeProjects\chronicle\data.json` | The live database. Real user data. |
+| `C:\Users\owner\ClaudeProjects\chronicle\chronicle-proxy\src\worker.js` | Cloudflare Worker — proxies GitHub writes, holds PAT as env secret. |
 
 **Git workflow:**
 ```
-1. Edit: C:\Users\owner\ClaudeProjects\chronicle\index.html
-2. Sync:  cp C:\Users\owner\ClaudeProjects\chronicle\index.html \
-              "C:\Users\owner\OneDrive - University of Guelph\Documents\Claude\chronicle-mockup\index.html"
-3. Push:  cd to chronicle-mockup parent, git add, git commit, git pull --rebase, git push
+1. Edit:  C:\Users\owner\ClaudeProjects\chronicle\index.html
+2. Stage: git add index.html (or relevant files)
+3. Push:  git pull --rebase && git commit -m "..." && git push
 ```
+Working directory: `C:\Users\owner\ClaudeProjects\chronicle`
 
 ---
 
@@ -354,10 +349,8 @@ The GitHub Contents API PUT requires the current file SHA. Always fetch the SHA 
 If the live site has been used (tasks checked off, etc.) since the last push, git will reject a push. Do `git pull --rebase` first.
 
 **5. Preview server for local testing**  
-Working directory is `C:\Users\owner\OneDrive - University of Guelph\Documents\Claude`. Two server configs in `.claude/launch.json`:
-- Port 3456 → serves `chronicle-mockup/` (git-tracked copy)
-- Port 3457 → serves `C:\Users\owner\ClaudeProjects\chronicle` (working copy)
-Edit ClaudeProjects, preview on 3457, then cp → chronicle-mockup → commit → push.
+Port 3457 serves `C:\Users\owner\ClaudeProjects\chronicle` — the single working git repo.
+Edit index.html, preview on 3457, then commit and push directly from that directory.
 
 **6. Priority badges work with CSS classes**  
 `prio-high`, `prio-medium`, `prio-low` — defined in CSS. The JS uses `t.priority?` check before rendering.
