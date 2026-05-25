@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-05-25T23:11:18.409Z",
+    "lastUpdated": "2026-05-25T23:29:20.327Z",
     "version": "3.0",
     "_owner": "any"
   },
@@ -22,9 +22,7 @@
           "id": "tov-p1",
           "name": "Documentation",
           "taskIds": [
-            "jarvis-t-1",
-            "jarvis-t-2",
-            "jarvis-t-3"
+            "jarvis-t-1"
           ],
           "order": 0
         },
@@ -78,6 +76,26 @@
           "name": "Practice Exams",
           "taskIds": [],
           "order": 1
+        }
+      ]
+    },
+    "personal": {
+      "id": "personal",
+      "_owner": "jarvis",
+      "name": "Personal",
+      "status": "active",
+      "deadline": null,
+      "parentId": null,
+      "phases": [
+        {
+          "id": "personal-p1",
+          "name": "Research",
+          "taskIds": [
+            "jarvis-t-1779751760339",
+            "jarvis-t-1779751760340",
+            "jarvis-t-1779751760341"
+          ],
+          "order": 0
         }
       ]
     }
@@ -177,6 +195,54 @@
       "files": [],
       "parentId": null,
       "createdAt": "2026-05-25T23:11:18.409Z",
+      "completedAt": null
+    },
+    "jarvis-t-1779751760339": {
+      "id": "jarvis-t-1779751760339",
+      "_owner": "jarvis",
+      "title": "Research dental benefits open enrollment",
+      "project": "personal",
+      "phase": "personal-p1",
+      "status": "todo",
+      "priority": "medium",
+      "deadline": "2026-06-07",
+      "blocked": false,
+      "notes": "Open enrollment coming up early June",
+      "files": [],
+      "parentId": null,
+      "createdAt": "2026-05-25T23:29:20.327Z",
+      "completedAt": null
+    },
+    "jarvis-t-1779751760340": {
+      "id": "jarvis-t-1779751760340",
+      "_owner": "jarvis",
+      "title": "Research mobile car business report",
+      "project": "personal",
+      "phase": "personal-p1",
+      "status": "todo",
+      "priority": "medium",
+      "deadline": null,
+      "blocked": false,
+      "notes": "",
+      "files": [],
+      "parentId": null,
+      "createdAt": "2026-05-25T23:29:20.327Z",
+      "completedAt": null
+    },
+    "jarvis-t-1779751760341": {
+      "id": "jarvis-t-1779751760341",
+      "_owner": "jarvis",
+      "title": "Research stock market — update Claude skill",
+      "project": "personal",
+       "phase": "personal-p1",
+      "status": "todo",
+      "priority": "medium",
+      "deadline": null,
+      "blocked": false,
+      "notes": "",
+      "files": [],
+      "parentId": null,
+      "createdAt": "2026-05-25T23:29:20.327Z",
       "completedAt": null
     }
   },
