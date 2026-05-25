@@ -18,7 +18,7 @@ https://api.github.com/repos/rayyanali722-cmyk/chronicle/contents/data.json
 
 ## Personal Access Token
 ```
-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
+REPLACE_WITH_YOUR_NEW_PAT
 ```
 
 *FOR USER USE ONLY*: Replace `REPLACE_WITH_YOUR_PAT` above with your GitHub PAT (needs `repo` scope).
