@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-05-25T21:02:42.275Z",
+    "lastUpdated": "2026-05-25T21:14:24.077Z",
     "version": "3.0",
     "_owner": "any"
   },
@@ -102,6 +102,13 @@
           "order": 1
         }
       ]
+    },
+    "proj-1779743664072": {
+      "id": "proj-1779743664072",
+      "name": "Hair",
+      "status": "active",
+      "deadline": "2026-05-25",
+      "phases": []
     }
   },
   "tasks": {
