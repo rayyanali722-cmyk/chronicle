@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-05-25T20:22:49.391Z",
+    "lastUpdated": "2026-05-25T20:23:03.035Z",
     "version": "3.0",
     "_owner": "any"
   },
@@ -124,14 +124,14 @@
       "title": "Refresh LinkedIn headline and about section",
       "project": "job-search",
       "phase": "js-p1",
-      "status": "done",
+      "status": "doing",
       "priority": "medium",
       "deadline": "2026-05-21",
       "blocked": false,
       "notes": "",
       "files": [],
       "createdAt": "2026-05-14T00:00:00Z",
-      "completedAt": "2026-05-25T20:22:49.389Z"
+      "completedAt": null
     },
     "js-t3": {
       "id": "js-t3",
@@ -139,14 +139,14 @@
       "title": "Apply to 5 engineering roles",
       "project": "job-search",
       "phase": "js-p2",
-      "status": "done",
+      "status": "doing",
       "priority": "high",
       "deadline": "2026-05-24",
       "blocked": true,
       "notes": "Blocked on resume update",
       "files": [],
       "createdAt": "2026-05-14T00:00:00Z",
-      "completedAt": "2026-05-25T20:22:47.499Z"
+      "completedAt": null
     },
     "js-t4": {
       "id": "js-t4",
