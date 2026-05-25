@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-05-25T21:17:02.141Z",
+    "lastUpdated": "2026-05-25T21:18:52.732Z",
     "version": "3.0",
     "_owner": "any"
   },
@@ -10,8 +10,7 @@
       "js-t1",
       "cap-t1",
       "cswp-t2",
-      "task-1779742962273",
-      "task-1779743697727"
+      "task-1779742962273"
     ],
     "note": "Get the resume updated and keep capstone momentum going."
   },
@@ -103,13 +102,6 @@
           "order": 1
         }
       ]
-    },
-    "proj-1779743664072": {
-      "id": "proj-1779743664072",
-      "name": "Hair",
-      "status": "active",
-      "deadline": "2026-05-25",
-      "phases": []
     }
   },
   "tasks": {
@@ -290,20 +282,6 @@
       "notes": "",
       "files": [],
       "createdAt": "2026-05-25T21:02:42.273Z",
-      "completedAt": null
-    },
-    "task-1779743697727": {
-      "id": "task-1779743697727",
-      "title": "Maintainance",
-      "project": "proj-1779743664072",
-      "phase": "",
-      "status": "todo",
-      "priority": "high",
-      "deadline": "2026-05-25",
-      "blocked": false,
-      "notes": "",
-      "files": [],
-      "createdAt": "2026-05-25T21:14:57.727Z",
       "completedAt": null
     }
   },
