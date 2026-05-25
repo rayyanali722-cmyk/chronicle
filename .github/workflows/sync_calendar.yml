@@ -1,4 +1,4 @@
-name: Sync Chronicle → Google Calendar
+name: Sync Chronicle → Google Calendar + Notion
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
 jobs:
   sync:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
 
     steps:
       - name: Checkout repo
@@ -21,10 +21,16 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pip install google-auth google-api-python-client
+        run: pip install google-auth google-api-python-client requests
 
-      - name: Run calendar sync
+      - name: Sync → Google Calendar
         env:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
           GOOGLE_CALENDAR_ID: ${{ secrets.GOOGLE_CALENDAR_ID }}
         run: python scripts/sync_calendar.py
+
+      - name: Sync → Notion
+        if: ${{ secrets.NOTION_TOKEN != '' }}
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+        run: python scripts/sync_notion.py
