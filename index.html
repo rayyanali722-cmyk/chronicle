@@ -527,19 +527,17 @@ body.sb-open #sidebar{transform:translateX(0)}
     </div>
     <div class="modal-body">
       <div class="form-row">
-        <label class="form-label">GitHub Token (enables saving from any device)</label>
-        <input id="settings-token" type="password" placeholder="ghp_…">
-        <p style="font-size:11px;color:var(--text-muted);margin-top:6px;line-height:1.5">Stored in your browser. Needs repo scope. Required to save changes.</p>
-      </div>
-      <div class="form-row">
         <label class="form-label">Last synced</label>
         <p id="settings-last-sync" style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-dim)">—</p>
+      </div>
+      <div class="form-row">
+        <label class="form-label">Save proxy</label>
+        <p style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-dim);word-break:break-all">${PROXY_URL.startsWith('REPLACE')?'⚠ Not configured — deploy Cloudflare Worker':PROXY_URL}</p>
       </div>
       <button onclick="loadData(true)" style="padding:8px 14px;border:1px solid var(--border);border-radius:var(--radius);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;color:var(--text-dim);text-transform:uppercase;transition:all .15s" onmouseover="this.style.color='var(--blue)';this.style.borderColor='var(--blue)'" onmouseout="this.style.color='var(--text-dim)';this.style.borderColor='var(--border)'">↻ FORCE RELOAD</button>
     </div>
     <div class="modal-foot">
-      <button class="btn-secondary" onclick="closeSettingsModal()">CANCEL</button>
-      <button class="btn-primary" onclick="saveSettings()">SAVE</button>
+      <button class="btn-primary" onclick="closeSettingsModal()">CLOSE</button>
     </div>
   </div>
 </div>
@@ -550,6 +548,7 @@ body.sb-open #sidebar{transform:translateX(0)}
 const GH = { owner:'rayyanali722-cmyk', repo:'chronicle', branch:'main', file:'data.json' };
 const AUTH_KEY = 'chronicle_auth';
 const PASS = 'chronicle2026'; // change this to your preferred password
+const PROXY_URL = 'REPLACE_WITH_YOUR_WORKER_URL'; // e.g. https://chronicle-proxy.yourname.workers.dev
 
 function checkAuth(){ return sessionStorage.getItem(AUTH_KEY)==='1'; }
 function submitAuth(){
@@ -577,8 +576,7 @@ const APP = {
   saving:false, lastLoaded:null
 };
 
-function getToken(){ return localStorage.getItem('chronicle_token')||''; }
-function setToken(t){ localStorage.setItem('chronicle_token',t.trim()); }
+// PAT moved server-side — no longer stored in browser (Priority 3: security proxy)
 
 // ── DATA ──
 async function loadData(force){
@@ -597,27 +595,38 @@ async function loadData(force){
 }
 
 async function saveData(){
-  const token=getToken();
-  if(!token){ openSettingsModal(); showToast('Set your GitHub token first','error'); return false; }
+  if(!PROXY_URL||PROXY_URL.startsWith('REPLACE')){
+    showToast('Proxy not configured — see CHRONICLE_LOG.md Priority 3','error');
+    return false;
+  }
   APP.saving=true;
   document.getElementById('save-indicator').style.display='inline';
   APP.data.meta.lastUpdated=new Date().toISOString();
+  const auth=sessionStorage.getItem(AUTH_KEY)||'';
+  const proxyHeaders={'Content-Type':'application/json','X-Chronicle-Auth':auth};
   try{
-    const shaRes=await fetch(`https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/${GH.file}`,
-      {headers:{Authorization:`token ${token}`,Accept:'application/vnd.github.v3+json'}});
+    const shaRes=await fetch(
+      `${PROXY_URL}/github/repos/${GH.owner}/${GH.repo}/contents/${GH.file}`,
+      {headers:proxyHeaders}
+    );
+    if(!shaRes.ok) throw new Error(`SHA fetch failed: ${shaRes.status}`);
     const shaData=await shaRes.json();
     const content=btoa(unescape(encodeURIComponent(JSON.stringify(APP.data,null,2))));
-    const putRes=await fetch(`https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/${GH.file}`,{
-      method:'PUT',
-      headers:{Authorization:`token ${token}`,'Content-Type':'application/json',Accept:'application/vnd.github.v3+json'},
-      body:JSON.stringify({message:'Update data.json via Chronicle',content,sha:shaData.sha,branch:GH.branch})
-    });
-    if(!putRes.ok) throw new Error();
+    const putRes=await fetch(
+      `${PROXY_URL}/github/repos/${GH.owner}/${GH.repo}/contents/${GH.file}`,
+      {
+        method:'PUT',
+        headers:proxyHeaders,
+        body:JSON.stringify({message:'Update data.json via Chronicle',content,sha:shaData.sha,branch:GH.branch})
+      }
+    );
+    if(!putRes.ok) throw new Error(`PUT failed: ${putRes.status}`);
     APP.lastLoaded=new Date();
     showToast('Saved ✓','success');
     return true;
   }catch(e){
-    showToast('Save failed — check token','error');
+    showToast('Save failed — check proxy or network','error');
+    console.error('saveData error:',e);
     return false;
   }finally{
     APP.saving=false;
@@ -1090,12 +1099,10 @@ function closeFocusModal(){ document.getElementById('focus-modal').classList.rem
 
 // ── SETTINGS ──
 function openSettingsModal(){
-  document.getElementById('settings-token').value=getToken();
   document.getElementById('settings-last-sync').textContent=APP.lastLoaded?APP.lastLoaded.toLocaleString():'—';
   document.getElementById('settings-modal').classList.add('open');
 }
 function closeSettingsModal(){ document.getElementById('settings-modal').classList.remove('open'); }
-function saveSettings(){ const t=document.getElementById('settings-token').value.trim(); if(t) setToken(t); closeSettingsModal(); showToast('Settings saved ✓','success'); }
 
 // ── JARVIS ──
 function copyJarvisContext(){

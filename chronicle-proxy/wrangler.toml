@@ -1,0 +1,11 @@
+name = "chronicle-proxy"
+main = "src/worker.js"
+compatibility_date = "2024-09-23"
+compatibility_flags = ["nodejs_compat"]
+
+# After deploying, your Worker URL will be:
+# https://chronicle-proxy.<your-subdomain>.workers.dev
+#
+# Set secrets with:
+#   wrangler secret put GITHUB_PAT
+#   wrangler secret put CHRONICLE_PASS
