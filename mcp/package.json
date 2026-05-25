@@ -1,0 +1,14 @@
+{
+  "name": "chronicle-mcp",
+  "version": "1.0.0",
+  "description": "Chronicle MCP server — read/write data.json on GitHub",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.11.0",
+    "zod": "^3.23.0"
+  }
+}

@@ -23,25 +23,20 @@ changed.
 
 ## Setup (read once per session)
 
-1. Read `references/config.md` — get the PAT and repo URLs.
-2. Read `references/schema.md` — understand the data model before touching anything.
-
-If `references/config.md` still says `REPLACE_WITH_YOUR_PAT`, tell the user to open:
-`C:\Users\owner\ClaudeProjects\chronicle\skills\chronicle-jarvis\references\config.md`
-and paste in their GitHub PAT (`repo` scope), then stop. Don't proceed without auth.
+Read `references/schema.md` — understand the data model before touching anything.
 
 ---
 
 ## Step 1 — Fetch live data
 
-Every Jarvis session starts by fetching the live data:
+Every Jarvis session starts by calling the MCP tool:
 
 ```
-WebFetch: https://raw.githubusercontent.com/rayyanali722-cmyk/chronicle/main/data.json
+chronicle_read()
 ```
 
-Parse the JSON fully. You're working with keyed objects (`data.projects`, `data.tasks`) —
-iterate with `Object.values()` style thinking, not array indexing.
+This returns the full parsed data.json. You're working with keyed objects (`data.projects`,
+`data.tasks`) — iterate with `Object.values()` style thinking, not array indexing.
 
 ---
 
@@ -118,7 +113,7 @@ Subtasks under "Build API integration":
 Write this to Chronicle? (yes/no or adjust anything)
 ```
 
-Wait for confirmation. Then write everything in a single PUT.
+Wait for confirmation. Then write everything in a single call.
 
 ---
 
@@ -127,18 +122,25 @@ Wait for confirmation. Then write everything in a single PUT.
 After any mutation (create, update, delete), write the full updated data.json to GitHub.
 Before writing, update `meta.lastUpdated` to the current ISO timestamp.
 
-**Claude Code — use the bundled script:**
+**Use the MCP tool — no stale SHA possible:**
 
-```bash
-node "C:\Users\owner\ClaudeProjects\chronicle\skills\chronicle-jarvis\scripts\write_data.js" "<PAT>" "<full-data-json-string>"
+```
+chronicle_write(data, message?)
 ```
 
-If the script exits 0, report success with the commit SHA. If it exits 1, report the error.
+- `data` — the full updated data object
+- `message` — optional commit message (defaults to `Jarvis: update data.json [YYYY-MM-DD]`)
 
-**Claude.ai — use the GitHub API directly:**
+The tool fetches a fresh SHA immediately before every PUT, so concurrent writes never cause
+conflicts. Returns `{ success: true, commit: "<sha>" }`.
+
+**Claude.ai fallback (no MCP available) — use the GitHub API directly:**
 1. GET `https://api.github.com/repos/rayyanali722-cmyk/chronicle/contents/data.json`
    with `Authorization: token <PAT>` to get the current SHA.
 2. PUT the same URL with `{ message, content: <base64-encoded JSON>, sha, branch: "main" }`.
+3. On 409 (stale SHA), GET again and retry once.
+
+PAT is in `references/config.md`.
 
 ---
 
@@ -177,6 +179,5 @@ If something was skipped or failed, say so explicitly.
 
 ## Reference files
 
-- `references/config.md` — PAT and repo URLs (edit this to add your PAT)
+- `references/config.md` — PAT and repo URLs (Claude.ai fallback only)
 - `references/schema.md` — Full data.json schema with field definitions and ID conventions
-- `scripts/write_data.js` — Node.js GitHub write helper (Claude Code only)
