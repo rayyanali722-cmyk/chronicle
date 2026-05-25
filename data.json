@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-05-25T20:25:39.155Z",
+    "lastUpdated": "2026-05-25T21:02:04.149Z",
     "version": "3.0",
     "_owner": "any"
   },
@@ -124,14 +124,14 @@
       "title": "Refresh LinkedIn headline and about section",
       "project": "job-search",
       "phase": "js-p1",
-      "status": "doing",
+      "status": "done",
       "priority": "medium",
       "deadline": "2026-05-21",
       "blocked": false,
       "notes": "",
       "files": [],
       "createdAt": "2026-05-14T00:00:00Z",
-      "completedAt": null
+      "completedAt": "2026-05-25T21:02:04.148Z"
     },
     "js-t3": {
       "id": "js-t3",
