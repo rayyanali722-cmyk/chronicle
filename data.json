@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-05-25T20:23:03.035Z",
+    "lastUpdated": "2026-05-25T20:23:03.904Z",
     "version": "3.0",
     "_owner": "any"
   },
@@ -139,14 +139,14 @@
       "title": "Apply to 5 engineering roles",
       "project": "job-search",
       "phase": "js-p2",
-      "status": "doing",
+      "status": "done",
       "priority": "high",
       "deadline": "2026-05-24",
       "blocked": true,
       "notes": "Blocked on resume update",
       "files": [],
       "createdAt": "2026-05-14T00:00:00Z",
-      "completedAt": null
+      "completedAt": "2026-05-25T20:23:03.902Z"
     },
     "js-t4": {
       "id": "js-t4",
