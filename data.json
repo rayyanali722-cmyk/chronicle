@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-05-25T22:41:32.523Z",
+    "lastUpdated": "2026-05-25T22:41:51.406Z",
     "version": "3.0",
     "_owner": "any"
   },
@@ -108,7 +108,14 @@
       "name": "test",
       "status": "active",
       "deadline": null,
-      "phases": []
+      "phases": [
+        {
+          "id": "ph-1779748911405",
+          "name": "testttt",
+          "taskIds": [],
+          "order": 0
+        }
+      ]
     }
   },
   "tasks": {
