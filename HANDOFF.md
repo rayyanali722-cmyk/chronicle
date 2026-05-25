@@ -230,7 +230,7 @@ initApp()               — sets up sidebar state, calls loadData(), registers k
 - **Per-project "⚡ ASK JARVIS" button** on cards → `copyProjectContext(pid)` → copies one project's summary
 - **Jarvis chat textarea** at bottom of each project detail → `sendToJarvis(pid)` → builds project context + typed message → copies structured clipboard content → user pastes into Jarvis on Claude.ai
 
-**Jarvis** is the user's Claude.ai Project (separate from Claude Code) that has Notion + Google Calendar MCP connectors. When the user pastes context + a question, Jarvis can read/write to data.json via the GitHub API.
+**Jarvis** is the user's Claude.ai Project (separate from Claude Code). When the user pastes context + a question, Jarvis can read/write to data.json via the GitHub API.
 
 **Clipboard format from `sendToJarvis()`:**
 ```
@@ -276,7 +276,7 @@ Committed `efbdfcb` — `data.json` v3.0. All entities keyed. `_owner` annotatio
 
 ### Priority 2 — Security Proxy (Cloudflare Worker or Vercel Edge)
 
-**Problem:** GitHub PAT is stored in `localStorage` — visible to anyone with DevTools access. Low risk for a personal tool with no public URL, but the council flagged it as the right time to fix it before adding more secrets (Anthropic API key, Notion token, etc.).
+**Problem:** GitHub PAT is stored in `localStorage` — visible to anyone with DevTools access. Low risk for a personal tool with no public URL, but the council flagged it as the right time to fix it before adding more secrets (Anthropic API key, etc.).
 
 **Solution:** Deploy a Cloudflare Worker (free tier) or Vercel Edge Function that:
 1. Accepts a POST with `{ action, payload }` from the browser
@@ -307,7 +307,6 @@ Write a crafted system prompt for the Claude.ai Project "Jarvis" that teaches it
 ### Priority 4 — GitHub Actions Automated Sync
 
 `.github/workflows/sync.yml` — runs `fetch_data.py` on schedule (7am daily):
-- Reads Notion API → maps to tasks/projects with `_owner: "sync"`
 - Reads Google Calendar API → maps to events with `_owner: "sync"`
 - Only overwrites fields where `_owner === "sync"` (never touches manual fields)
 - Commits and pushes to `main`
@@ -382,7 +381,6 @@ On desktop (>768px), sidebar starts open (`sb-open` class added on DOMContentLoa
 - Running 3 concurrent projects: Job Search, CSWP Cert Prep (SolidWorks), Capstone Startup
 - Uses Claude.ai (Jarvis) for natural language task management
 - Checks Chronicle daily as his primary operating view
-- May migrate from Notion → Obsidian in the future
 - Wants to be able to manage everything manually (not dependent on Jarvis for basic CRUD)
 - Email: rayyanali722@gmail.com
 
