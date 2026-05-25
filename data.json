@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-05-25T21:16:25.931Z",
+    "lastUpdated": "2026-05-25T21:17:02.141Z",
     "version": "3.0",
     "_owner": "any"
   },
@@ -297,14 +297,14 @@
       "title": "Maintainance",
       "project": "proj-1779743664072",
       "phase": "",
-      "status": "done",
+      "status": "todo",
       "priority": "high",
       "deadline": "2026-05-25",
       "blocked": false,
       "notes": "",
       "files": [],
       "createdAt": "2026-05-25T21:14:57.727Z",
-      "completedAt": "2026-05-25T21:16:25.929Z"
+      "completedAt": null
     }
   },
   "events": {}
