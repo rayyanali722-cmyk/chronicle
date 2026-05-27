@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-05-27T05:08:21.891Z",
+    "lastUpdated": "2026-05-27T05:21:23.427Z",
     "version": "3.0",
     "_owner": "any"
   },
@@ -235,7 +235,7 @@
       "title": "Research stock market — update Claude skill",
       "project": "personal",
       "phase": "personal-p1",
-      "status": "todo",
+      "status": "doing",
       "priority": "medium",
       "deadline": null,
       "blocked": false,
