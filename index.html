@@ -142,7 +142,9 @@ body.sb-open #sidebar{transform:translateX(0)}
 .phase-block{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:12px;overflow:hidden}
 .phase-block-header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;cursor:pointer;transition:background .15s}
 .phase-block-header:hover{background:var(--surface2)}
-.phase-block-title{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:1px}
+.phase-block-title{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:1px;outline:none;border-radius:3px;padding:1px 4px;margin:-1px -4px}
+.phase-block-title[contenteditable="true"]{background:var(--surface3);border:1px solid var(--accent);color:var(--text);cursor:text}
+.phase-block-title:not([contenteditable="true"]):hover{background:var(--surface2)}
 .phase-block-meta{display:flex;align-items:center;gap:8px}
 .phase-progress{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-muted)}
 .phase-chevron{color:var(--text-muted);transition:transform .2s;font-size:12px}
@@ -759,7 +761,7 @@ function renderProject(pid,container){
     const d=pt.filter(t=>t.status==='done').length;
     html+=`<div class="phase-block" id="ph-${ph.id}">
       <div class="phase-block-header" onclick="togglePhase('${ph.id}')">
-        <span class="phase-block-title">${escHtml(ph.name)}</span>
+        <span class="phase-block-title" ondblclick="event.stopPropagation();renamePhase('${pid}','${ph.id}')" title="Double-click to rename">${escHtml(ph.name)}</span>
         <div class="phase-block-meta">
           <span class="phase-progress">${d}/${pt.length}</span>
           <button class="phase-del-btn" onclick="event.stopPropagation();deletePhase('${pid}','${ph.id}')" title="Delete phase">✕</button>
@@ -959,7 +961,11 @@ function renderDrawerBody(){
   const inFocus=(APP.data.focus?.taskIds||[]).includes(t.id);
   const icons={todo:'',doing:'▶',done:'✓',blocked:'!'};
   const sopts=['todo','doing','done','blocked'].map(s=>`<button class="status-opt${t.status===s?' active-'+s:''}" onclick="drawerSetStatus('${s}')">${s}</button>`).join('');
-  const attHtml=(t.files||[]).map((f,i)=>`<div class="attach-item"><span class="attach-icon">${f.type==='url'?'🔗':'📝'}</span><span class="attach-name">${f.type==='url'?`<a href="${escHtml(f.content)}" target="_blank">${escHtml(f.name)}</a>`:escHtml(f.name)}</span><button class="attach-del" onclick="drawerRemoveAttach(${i})">✕</button></div>`).join('');
+  const attHtml=(t.files||[]).map((f,i)=>{
+    const icon=f.type==='url'?'🔗':f.type==='file'?'📎':'📝';
+    const label=f.type==='url'?`<a href="${escHtml(f.content)}" target="_blank" rel="noopener">${escHtml(f.name)}</a>`:f.type==='file'?`<a href="${f.content}" download="${escHtml(f.name)}">${escHtml(f.name)}</a>`:escHtml(f.name);
+    return `<div class="attach-item"><span class="attach-icon">${icon}</span><span class="attach-name">${label}</span><button class="attach-del" onclick="drawerRemoveAttach(${i})">✕</button></div>`;
+  }).join('');
 
   document.getElementById('drawer-body').innerHTML=`
     <div class="drawer-focus-row">
@@ -994,7 +1000,7 @@ function renderDrawerBody(){
     <div class="drawer-field">
       <div class="drawer-field-label">Attachments</div>
       <div class="attachments-list" id="attach-list">${attHtml||'<div style="font-size:12px;color:var(--text-muted)">None</div>'}</div>
-      <div class="attach-btns"><button class="attach-btn" onclick="drawerAddAttach('url')">+ LINK</button><button class="attach-btn" onclick="drawerAddAttach('text')">+ NOTE</button></div>
+      <div class="attach-btns"><button class="attach-btn" onclick="drawerAddAttach('url')">+ LINK</button><button class="attach-btn" onclick="drawerAddAttach('file')">+ FILE</button><input type="file" id="drawer-file-input" style="display:none" onchange="drawerHandleFile(event)"></div>
     </div>
     <div class="drawer-field"><div class="drawer-field-label">Info</div>
       <div class="drawer-timestamps">Created: ${t.createdAt?formatDateLong(t.createdAt):'—'}${t.completedAt?`<br>Done: ${formatDateLong(t.completedAt)}`:''}</div>
@@ -1023,16 +1029,48 @@ function drawerToggleFocus(){
 }
 function drawerAddAttach(type){
   if(type==='url'){
-    const url=prompt('Enter URL:'); if(!url) return;
+    let url=prompt('Enter URL:'); if(!url) return;
+    url=url.trim();
+    if(url && !/^https?:\/\//i.test(url)) url='https://'+url;
     const name=prompt('Label:',url); if(!name) return;
     (APP.drawerState.files=APP.drawerState.files||[]).push({type:'url',name,content:url});
-  }else{
-    const text=prompt('Enter note text:'); if(!text) return;
-    (APP.drawerState.files=APP.drawerState.files||[]).push({type:'text',name:text.substring(0,50),content:text});
+    renderDrawerBody();
+  } else if(type==='file'){
+    document.getElementById('drawer-file-input').click();
   }
-  renderDrawerBody();
+}
+function drawerHandleFile(e){
+  const file=e.target.files[0]; if(!file) return;
+  if(file.size>1024*1024){ showToast('File too large — max 1 MB. Use a link instead.','error'); e.target.value=''; return; }
+  const reader=new FileReader();
+  reader.onload=()=>{
+    (APP.drawerState.files=APP.drawerState.files||[]).push({type:'file',name:file.name,content:reader.result});
+    e.target.value='';
+    renderDrawerBody();
+  };
+  reader.readAsDataURL(file);
 }
 function drawerRemoveAttach(i){ APP.drawerState.files.splice(i,1); renderDrawerBody(); }
+function renamePhase(pid,phId){
+  const proj=APP.data.projects[pid]; if(!proj) return;
+  const ph=(proj.phases||[]).find(p=>p.id===phId); if(!ph) return;
+  const el=document.querySelector(`#ph-${phId} .phase-block-title`); if(!el) return;
+  const old=ph.name;
+  el.contentEditable='true'; el.focus();
+  const range=document.createRange(); range.selectNodeContents(el);
+  window.getSelection().removeAllRanges(); window.getSelection().addRange(range);
+  function commit(){
+    el.contentEditable='false';
+    const val=el.textContent.trim();
+    if(val && val!==old){ ph.name=val; saveData(); renderActiveView(); } else { el.textContent=old; }
+    el.removeEventListener('blur',commit); el.removeEventListener('keydown',onKey);
+  }
+  function onKey(e){
+    if(e.key==='Enter'){ e.preventDefault(); commit(); }
+    if(e.key==='Escape'){ el.textContent=old; el.contentEditable='false'; el.removeEventListener('blur',commit); el.removeEventListener('keydown',onKey); }
+  }
+  el.addEventListener('blur',commit); el.addEventListener('keydown',onKey);
+}
 function saveDrawer(){
   const t=APP.drawerState;
   t.title=document.getElementById('d-title')?.value.trim()||t.title;
