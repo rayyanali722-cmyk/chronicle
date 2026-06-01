@@ -1,12 +1,16 @@
 {
   "meta": {
-    "lastUpdated": "2026-06-01T04:00:08.055Z",
+    "lastUpdated": "2026-06-01T04:26:36.951Z",
     "version": "3.0",
     "_owner": "any"
   },
   "focus": {
-    "date": "2026-05-31",
-    "taskIds": [],
+    "date": "2026-06-01",
+    "taskIds": [
+      "jarvis-t-ip",
+      "jarvis-t-backyard",
+      "jarvis-t-furniture"
+    ],
     "note": ""
   },
   "projects": {
@@ -99,7 +103,8 @@
             "jarvis-t-backyard",
             "jarvis-t-furniture",
             "jarvis-t-wood",
-            "jarvis-t-moms-car"
+            "jarvis-t-moms-car",
+            "jarvis-t-nikkah"
           ],
           "order": 0
         }
@@ -131,7 +136,7 @@
       "phase": "js-p1",
       "status": "todo",
       "priority": "high",
-      "deadline": null,
+      "deadline": "2026-06-04",
       "blocked": false,
       "notes": "",
       "files": [],
@@ -147,7 +152,7 @@
       "phase": "js-p1",
       "status": "todo",
       "priority": "high",
-      "deadline": null,
+      "deadline": "2026-06-04",
       "blocked": false,
       "notes": "",
       "files": [],
@@ -195,7 +200,7 @@
       "phase": "cswp-p1",
       "status": "todo",
       "priority": "high",
-      "deadline": null,
+      "deadline": "2026-06-06",
       "blocked": false,
       "notes": "",
       "files": [],
@@ -211,7 +216,7 @@
       "phase": "cswp-p1",
       "status": "todo",
       "priority": "high",
-      "deadline": null,
+      "deadline": "2026-06-06",
       "blocked": false,
       "notes": "Official CSWP sample exam PDF: https://www.solidworks.com/sites/default/files/cswpsampleexam.pdf\nMySolidWorks sample exams: https://my.solidworks.com/training/path/15/cswp-sample-exams",
       "files": [],
@@ -345,6 +350,22 @@
       "files": [],
       "parentId": null,
       "createdAt": "2026-06-01T04:00:08.055Z",
+      "completedAt": null
+    },
+    "jarvis-t-nikkah": {
+      "id": "jarvis-t-nikkah",
+      "_owner": "jarvis",
+      "title": "Nikkah event itinerary for Saad photographer",
+      "project": "personal",
+      "phase": "personal-p1",
+      "status": "todo",
+      "priority": "high",
+      "deadline": "2026-06-06",
+      "blocked": false,
+      "notes": "",
+      "files": [],
+      "parentId": null,
+      "createdAt": "2026-06-01T04:26:36.951Z",
       "completedAt": null
     }
   },
