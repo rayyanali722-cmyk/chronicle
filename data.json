@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-06-01T08:34:41.262Z",
+    "lastUpdated": "2026-06-01T05:10:00.000Z",
     "version": "3.0",
     "_owner": "any"
   },
@@ -79,7 +79,9 @@
         {
           "id": "cswp-p2",
           "name": "Practice Exams",
-          "taskIds": [],
+          "taskIds": [
+            "jarvis-t-cswp-exam"
+          ],
           "order": 1
         }
       ]
@@ -233,7 +235,7 @@
       "phase": "personal-p1",
       "status": "todo",
       "priority": "medium",
-      "deadline": "2026-06-07",
+      "deadline": "2026-06-12",
       "blocked": false,
       "notes": "Open enrollment coming up early June",
       "files": [],
@@ -249,7 +251,7 @@
       "phase": "personal-p1",
       "status": "todo",
       "priority": "medium",
-      "deadline": null,
+      "deadline": "2026-06-12",
       "blocked": false,
       "notes": "",
       "files": [],
@@ -260,12 +262,12 @@
     "jarvis-t-1779751760341": {
       "id": "jarvis-t-1779751760341",
       "_owner": "jarvis",
-      "title": "Research stock market — update Claude skill",
+      "title": "Research stock market \u2014 update Claude skill",
       "project": "personal",
       "phase": "personal-p1",
       "status": "todo",
       "priority": "medium",
-      "deadline": null,
+      "deadline": "2026-06-12",
       "blocked": false,
       "notes": "",
       "files": [],
@@ -383,6 +385,22 @@
       "files": [],
       "parentId": null,
       "createdAt": "2026-06-01T04:30:00.000Z",
+      "completedAt": null
+    },
+    "jarvis-t-cswp-exam": {
+      "id": "jarvis-t-cswp-exam",
+      "_owner": "jarvis",
+      "title": "Write CSWP exam",
+      "project": "cswp",
+      "phase": "cswp-p2",
+      "status": "todo",
+      "priority": "high",
+      "deadline": "2026-06-27",
+      "blocked": false,
+      "notes": "",
+      "files": [],
+      "parentId": null,
+      "createdAt": "2026-06-01T05:10:00.000Z",
       "completedAt": null
     }
   },
