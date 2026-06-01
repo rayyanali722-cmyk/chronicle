@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-06-01T04:26:36.951Z",
+    "lastUpdated": "2026-06-01T04:30:00.000Z",
     "version": "3.0",
     "_owner": "any"
   },
@@ -104,7 +104,8 @@
             "jarvis-t-furniture",
             "jarvis-t-wood",
             "jarvis-t-moms-car",
-            "jarvis-t-nikkah"
+            "jarvis-t-nikkah",
+            "jarvis-t-rania"
           ],
           "order": 0
         }
@@ -259,7 +260,7 @@
     "jarvis-t-1779751760341": {
       "id": "jarvis-t-1779751760341",
       "_owner": "jarvis",
-      "title": "Research stock market — update Claude skill",
+      "title": "Research stock market \u2014 update Claude skill",
       "project": "personal",
       "phase": "personal-p1",
       "status": "done",
@@ -366,6 +367,22 @@
       "files": [],
       "parentId": null,
       "createdAt": "2026-06-01T04:26:36.951Z",
+      "completedAt": null
+    },
+    "jarvis-t-rania": {
+      "id": "jarvis-t-rania",
+      "_owner": "jarvis",
+      "title": "Call Rania for glasses",
+      "project": "personal",
+      "phase": "personal-p1",
+      "status": "todo",
+      "priority": "medium",
+      "deadline": "2026-06-03",
+      "blocked": false,
+      "notes": "",
+      "files": [],
+      "parentId": null,
+      "createdAt": "2026-06-01T04:30:00.000Z",
       "completedAt": null
     }
   },
