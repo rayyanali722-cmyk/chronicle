@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-06-01T05:00:00.000Z",
+    "lastUpdated": "2026-06-01T08:34:41.262Z",
     "version": "3.0",
     "_owner": "any"
   },
@@ -260,10 +260,10 @@
     "jarvis-t-1779751760341": {
       "id": "jarvis-t-1779751760341",
       "_owner": "jarvis",
-      "title": "Research stock market \u2014 update Claude skill",
+      "title": "Research stock market — update Claude skill",
       "project": "personal",
       "phase": "personal-p1",
-      "status": "done",
+      "status": "todo",
       "priority": "medium",
       "deadline": null,
       "blocked": false,
@@ -271,7 +271,7 @@
       "files": [],
       "parentId": null,
       "createdAt": "2026-05-25T23:29:20.327Z",
-      "completedAt": "2026-05-27T05:21:23.825Z"
+      "completedAt": null
     },
     "jarvis-t-sunnya": {
       "id": "jarvis-t-sunnya",
