@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-06-02T15:56:53.799Z",
+    "lastUpdated": "2026-06-02T15:56:54.281Z",
     "version": "3.0",
     "_owner": "any"
   },
@@ -186,7 +186,7 @@
       "title": "Interview prep",
       "project": "job-search",
       "phase": "js-p1",
-      "status": "todo",
+      "status": "done",
       "priority": "high",
       "deadline": "2026-06-01",
       "blocked": false,
@@ -194,7 +194,7 @@
       "files": [],
       "parentId": null,
       "createdAt": "2026-06-01T04:00:08.055Z",
-      "completedAt": null
+      "completedAt": "2026-06-02T15:56:54.278Z"
     },
     "jarvis-t-7": {
       "id": "jarvis-t-7",
