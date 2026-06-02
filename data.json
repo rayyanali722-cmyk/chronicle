@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-06-02T15:19:07.093Z",
+    "lastUpdated": "2026-06-02T15:56:35.074Z",
     "version": "3.0",
     "_owner": "any"
   },
@@ -378,7 +378,7 @@
       "title": "Call Rania for glasses",
       "project": "personal",
       "phase": "personal-p1",
-      "status": "doing",
+      "status": "done",
       "priority": "medium",
       "deadline": "2026-06-02",
       "blocked": false,
@@ -386,7 +386,7 @@
       "files": [],
       "parentId": null,
       "createdAt": "2026-06-01T04:30:00.000Z",
-      "completedAt": null
+      "completedAt": "2026-06-02T15:56:35.072Z"
     },
     "jarvis-t-cswp-exam": {
       "id": "jarvis-t-cswp-exam",
