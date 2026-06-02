@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-06-02T03:36:11.971Z",
+    "lastUpdated": "2026-06-02T03:36:18.228Z",
     "version": "3.0",
     "_owner": "any"
   },
@@ -8,7 +8,6 @@
     "date": "2026-06-01",
     "taskIds": [
       "jarvis-t-ip",
-      "jarvis-t-backyard",
       "jarvis-t-furniture",
       "task-1780371369470"
     ],
