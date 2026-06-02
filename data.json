@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-06-02T03:36:18.228Z",
+    "lastUpdated": "2026-06-02T15:19:07.093Z",
     "version": "3.0",
     "_owner": "any"
   },
@@ -378,7 +378,7 @@
       "title": "Call Rania for glasses",
       "project": "personal",
       "phase": "personal-p1",
-      "status": "todo",
+      "status": "doing",
       "priority": "medium",
       "deadline": "2026-06-02",
       "blocked": false,
