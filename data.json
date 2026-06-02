@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-06-02T03:36:09.473Z",
+    "lastUpdated": "2026-06-02T03:36:11.971Z",
     "version": "3.0",
     "_owner": "any"
   },
@@ -299,7 +299,7 @@
       "title": "Clean backyard",
       "project": "personal",
       "phase": "personal-p1",
-      "status": "todo",
+      "status": "done",
       "priority": "high",
       "deadline": "2026-06-01",
       "blocked": false,
@@ -307,7 +307,7 @@
       "files": [],
       "parentId": null,
       "createdAt": "2026-06-01T04:00:08.055Z",
-      "completedAt": null
+      "completedAt": "2026-06-02T03:36:11.968Z"
     },
     "jarvis-t-furniture": {
       "id": "jarvis-t-furniture",
