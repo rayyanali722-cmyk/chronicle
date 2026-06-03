@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-06-02T15:56:54.281Z",
+    "lastUpdated": "2026-06-03T04:54:43.780Z",
     "version": "3.0",
     "_owner": "any"
   },
@@ -409,7 +409,7 @@
       "title": "Marriage License Form",
       "project": "personal",
       "phase": "personal-p1",
-      "status": "todo",
+      "status": "doing",
       "priority": "high",
       "deadline": "2026-06-02",
       "blocked": false,
