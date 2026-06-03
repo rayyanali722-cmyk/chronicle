@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-06-03T04:58:18.987Z",
+    "lastUpdated": "2026-06-03T04:58:29.357Z",
     "version": "3.0",
     "_owner": "any"
   },
@@ -285,7 +285,7 @@
       "project": "personal",
       "phase": "personal-p1",
       "status": "todo",
-      "priority": "high",
+      "priority": "medium",
       "deadline": "2026-06-10",
       "blocked": false,
       "notes": "",
