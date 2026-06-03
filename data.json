@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-06-03T04:56:39.701Z",
+    "lastUpdated": "2026-06-03T04:56:45.477Z",
     "version": "3.0",
     "_owner": "any"
   },
@@ -157,7 +157,7 @@
       "phase": "js-p1",
       "status": "todo",
       "priority": "high",
-      "deadline": "2026-06-03",
+      "deadline": "2026-06-05",
       "blocked": false,
       "notes": "",
       "files": [],
