@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-06-03T04:55:57.210Z",
+    "lastUpdated": "2026-06-03T04:55:59.193Z",
     "version": "3.0",
     "_owner": "any"
   },
@@ -424,14 +424,14 @@
       "title": "Interview (Virtual) with JDRF Electromag Engineering Inc.",
       "project": "job-search",
       "phase": "js-p1",
-      "status": "doing",
+      "status": "done",
       "priority": "high",
       "deadline": "2026-06-03",
       "blocked": false,
       "notes": "",
       "files": [],
       "createdAt": "2026-06-03T04:55:55.900Z",
-      "completedAt": null
+      "completedAt": "2026-06-03T04:55:59.191Z"
     }
   },
   "events": {}
