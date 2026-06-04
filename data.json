@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-06-04T00:00:47.614Z",
+    "lastUpdated": "2026-06-04T00:01:27.429Z",
     "version": "3.0",
     "_owner": "any"
   },
@@ -110,7 +110,8 @@
             "jarvis-t-nikkah",
             "jarvis-t-rania",
             "task-1780371369470",
-            "task-1780462698985"
+            "task-1780462698985",
+            "task-1780531287426"
           ],
           "order": 0
         }
@@ -446,6 +447,20 @@
       "notes": "",
       "files": [],
       "createdAt": "2026-06-03T04:58:18.985Z",
+      "completedAt": null
+    },
+    "task-1780531287426": {
+      "id": "task-1780531287426",
+      "title": "Detail Kareem's Car",
+      "project": "personal",
+      "phase": "personal-p1",
+      "status": "todo",
+      "priority": "high",
+      "deadline": "2026-06-10",
+      "blocked": false,
+      "notes": "",
+      "files": [],
+      "createdAt": "2026-06-04T00:01:27.426Z",
       "completedAt": null
     }
   },
