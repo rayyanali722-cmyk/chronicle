@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-06-04T00:01:27.429Z",
+    "lastUpdated": "2026-06-10T19:54:34.045Z",
     "version": "3.0",
     "_owner": "any"
   },
@@ -440,7 +440,7 @@
       "title": "Visit Rania for Glasses and Sunglasses Order",
       "project": "personal",
       "phase": "personal-p1",
-      "status": "todo",
+      "status": "doing",
       "priority": "medium",
       "deadline": "2026-06-09",
       "blocked": false,
