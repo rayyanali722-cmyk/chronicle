@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-06-10T19:54:34.045Z",
+    "lastUpdated": "2026-06-10T19:57:00.000Z",
     "version": "3.0",
     "_owner": "any"
   },
@@ -111,7 +111,8 @@
             "jarvis-t-rania",
             "task-1780371369470",
             "task-1780462698985",
-            "task-1780531287426"
+            "task-1780531287426",
+            "jarvis-t-hamza"
           ],
           "order": 0
         }
@@ -266,7 +267,7 @@
     "jarvis-t-1779751760341": {
       "id": "jarvis-t-1779751760341",
       "_owner": "jarvis",
-      "title": "Research stock market — update Claude skill",
+      "title": "Research stock market \u2014 update Claude skill",
       "project": "personal",
       "phase": "personal-p1",
       "status": "todo",
@@ -461,6 +462,22 @@
       "notes": "",
       "files": [],
       "createdAt": "2026-06-04T00:01:27.426Z",
+      "completedAt": null
+    },
+    "jarvis-t-hamza": {
+      "id": "jarvis-t-hamza",
+      "_owner": "jarvis",
+      "title": "Hamza coming over",
+      "project": "personal",
+      "phase": "personal-p1",
+      "status": "todo",
+      "priority": "medium",
+      "deadline": "2026-06-11",
+      "blocked": false,
+      "notes": "",
+      "files": [],
+      "parentId": null,
+      "createdAt": "2026-06-10T19:57:00.000Z",
       "completedAt": null
     }
   },
